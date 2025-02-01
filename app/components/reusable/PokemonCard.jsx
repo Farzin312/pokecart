@@ -3,14 +3,11 @@
 import React, { memo } from 'react';
 import PokemonType from './PokemonType';
 import { usePokemonContext } from '@/app/context/PokemonContext';
-import Spinner from './Spinner';
 
 const PokemonCard = memo(function PokemonCard() {
-  const { pokemonList, isLoading } = usePokemonContext();
+  const { pokemonList } = usePokemonContext();
 
-  if (isLoading) {
-    return <Spinner />;
-  }
+  
 
   // Group Pokémon by type
   const groupedByType= {};
@@ -27,7 +24,7 @@ const PokemonCard = memo(function PokemonCard() {
       {Object.entries(groupedByType).map(([type, pokemons]) => (
         <div
           key={type}
-          className="w-full md:w-[240px] bg-gray-50 opacity-90 rounded-md shadow p-3 hover:scale-105 hover:opacity-100 transition-transform duration-300"
+          className="w-full md:w-[240px] bg-gray-50 opacity-90 rounded-md shadow p-3 hover:scale-105 hover:opacity-100 hover:bg-yellow-50 transition-transform duration-300"
         >
           {/* Type Heading */}
           <h2 className="text-lg md:text-xl font-semibold capitalize mb-3 text-center">{type} Type Pokémon</h2>

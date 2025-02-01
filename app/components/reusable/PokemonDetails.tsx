@@ -1,53 +1,77 @@
-'use client';
 
 import Image from 'next/image';
+import Pokemon from '@/app/type/Pokemon';
 
-interface Pokemon {
-  id: number;
-  name: string;
-  types: { type: { name: string } }[];
-  sprites: {
-    front_default: string;
-    front_shiny: string;
-    other: {
-      'official-artwork': { front_default: string };
-    };
-  };
-  abilities: { ability: { name: string } }[];
-  height: number;
-  weight: number;
-  base_experience: number;
-  stats: { base_stat: number; stat: { name: string } }[];
-}
+function PokemonDetails({ selectedPokemon }: { selectedPokemon: Pokemon | null }) {
+  // If there's no selected Pokémon, return `null`
+  if (!selectedPokemon) {
+    return null;
+  }
 
-function PokemonDetails({ pokemon }: { pokemon: Pokemon }) {
   return (
-    <li className="p-4 border border-gray-300 rounded-md shadow-md max-w-sm bg-white">
-      <h2 className="text-xl font-bold capitalize">{pokemon.name}</h2>
+    <li className="p-4 border border-gray-300 rounded-md shadow-md max-w-sm bg-white list-none">
+      <h2 className="text-xl font-bold capitalize">{selectedPokemon.name ?? "Unknown Pokémon"}</h2>
 
       {/* Pokémon Image */}
-        <Image
-          src={pokemon.sprites.other['official-artwork'].front_default || pokemon.sprites.front_default}
-          alt={pokemon.name}
-          width={150}
-          height={150}
-          priority
-          className="rounded-md"
-        />
+      <Image
+        src={
+          selectedPokemon.sprites?.other?.['official-artwork']?.front_default
+          || selectedPokemon.sprites?.front_default
+          || "/images/fallback-image.jpg"
+        }
+        alt={selectedPokemon.name ?? "Unknown Pokémon"}
+        width={150}
+        height={150}
+        priority
+        className="rounded-md"
+      />
 
       {/* Pokémon Details */}
-      <p><strong>Type:</strong> {pokemon.types.map((t) => t.type.name).join(', ')}</p>
-      <p><strong>Abilities:</strong> {pokemon.abilities.map((a) => a.ability.name).join(', ')}</p>
-      <p><strong>Height:</strong> {pokemon.height / 10} m</p>
-      <p><strong>Weight:</strong> {pokemon.weight / 10} kg</p>
-      <p><strong>Base Experience:</strong> {pokemon.base_experience}</p>
+      <p>
+        <strong>Type:</strong>{" "}
+        {selectedPokemon.types?.map((t, index) => (
+          <span key={index}>
+            {t.type.name}
+            {index < (selectedPokemon.types?.length ?? 0) - 1 ? ', ' : ''}
+          </span>
+        )) ?? <span>None</span>}
+      </p>
+      <p>
+        <strong>Abilities:</strong>{" "}
+        {selectedPokemon.abilities?.map((a, index) => (
+          <span key={index}>
+            {a.ability.name}
+            {index < (selectedPokemon.abilities?.length ?? 0) - 1 ? ', ' : ''}
+          </span>
+        )) ?? <span>None</span>}
+      </p>
+      <p>
+        <strong>Height:</strong>{" "}
+        {selectedPokemon.height != null
+          ? (selectedPokemon.height / 10).toFixed(1)
+          : "Unknown"} m
+      </p>
+      <p>
+        <strong>Weight:</strong>{" "}
+        {selectedPokemon.weight != null
+          ? (selectedPokemon.weight / 10).toFixed(1)
+          : "Unknown"} kg
+      </p>
+      <p>
+        <strong>Base Experience:</strong>{" "}
+        {selectedPokemon.base_experience ?? "Unknown"}
+      </p>
 
       {/* Pokémon Stats */}
-      <p><strong>Stats:</strong></p>
+      <p>
+        <strong>Stats:</strong>
+      </p>
       <ul>
-        {pokemon.stats.map((s) => (
-          <li key={s.stat.name}>{s.stat.name}: {s.base_stat}</li>
-        ))}
+        {selectedPokemon.stats?.map(s => (
+          <li key={s.stat.name}>
+            {s.stat.name}: {s.base_stat}
+          </li>
+        )) ?? <li>None</li>}
       </ul>
     </li>
   );

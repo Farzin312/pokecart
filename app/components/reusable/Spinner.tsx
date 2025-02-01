@@ -1,10 +1,11 @@
 'use client'
 import { memo } from 'react';
+import React from 'react';
 
-function Spinner() {
+const Spinner = memo(function Spinner() {
   return (
     <div>loading...</div>
   )
-}
+});
 
-export default memo(Spinner);
+export default Spinner;

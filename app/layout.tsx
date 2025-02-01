@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Navbar, Footer} from './components'
-import Image from 'next/image';
-import pokemon from '../public/background.jpg';
 import './globals.css';
 
 const geistSans = Geist({
@@ -31,16 +29,6 @@ export default function RootLayout({
     <html lang="en" className="h-full">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col h-full items-center`}>
-          <Image
-      alt="Pokemon"
-      src={pokemon}
-      placeholder="blur"
-      quality={100}
-      fill
-      sizes='full'
-      style={{
-        objectFit: 'cover',
-      }}/>
           <Navbar />
         <main className="flex-grow">
         {children}

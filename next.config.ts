@@ -3,7 +3,12 @@ import MillionLint from "@million/lint";
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ['raw.githubusercontent.com'],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "raw.githubusercontent.com",
+      },
+    ],
   },
 };
 

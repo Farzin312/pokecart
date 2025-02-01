@@ -1,10 +1,12 @@
-'use client'
-
 import { PokemonProvider } from "../context/PokemonContext"
+import { fetchPokemonByType } from "../utils/pokemonFetcher"
 
-function PokemonWrapper({ children }: { children: React.ReactNode }) {
+async function PokemonWrapper({ children }: { children: React.ReactNode }) {
+  const pokemonList = await fetchPokemonByType()
+  const randomIndex = Math.floor(Math.random() * pokemonList.length);
+  const randomPokemon = pokemonList[randomIndex]
   return (
-    <PokemonProvider>
+    <PokemonProvider initialData={pokemonList} randomPokemon={randomPokemon}>
       {children}
     </PokemonProvider>
   )

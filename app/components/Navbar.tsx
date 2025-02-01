@@ -18,13 +18,13 @@ function Navbar() {
 
 
   return (
-    <nav className={`${'flex w-11/12  justify-between items-center bg-white opacity-90 shadow-md rounded-md px-2 z-10'} ${searchActive? 'opacity-100' : ''}`}>
+    <nav className={`${'flex w-full justify-between items-center bg-white opacity-80 shadow-md rounded-md px-2'} ${searchActive? 'opacity-100 bg-yellow-50' : ''}`}>
       <Link href='/'>
           <Logo />
       </Link>
       <div
         className={`flex w-full max-w-sm items-center space-x-1 border rounded-md ${
-          searchActive? 'border rounded-md bg-gray-50 border-gray-500 shadow-lg' : '' }`}>
+          searchActive? 'border rounded-md bg-gray-50 border-yellow-300 shadow-lg' : '' }`}>
         <SearchBar
           type="text"
           placeholder="Search for your Pokemon 🤩"
@@ -32,6 +32,7 @@ function Navbar() {
           onBlur={handleBlur}
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
+          className={searchActive? 'focus-visible:ring-yellow-300' : ''}
         />
         <Button className="text-2xl" variant="ghost">🔎</Button>
       </div>
