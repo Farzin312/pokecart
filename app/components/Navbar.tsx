@@ -27,7 +27,7 @@ function Navbar() {
 
 
   return (
-    <nav className={`${'flex w-full justify-between items-center bg-white opacity-80 shadow-md rounded-md px-2'} ${searchActive? 'opacity-100 bg-yellow-50' : ''}`}>
+    <nav className={`${'flex w-full justify-between items-center bg-gradient-to-r from-white to-yellow-100 opacity-80 shadow-md rounded-md px-2'} ${searchActive? 'opacity-100' : ''}`}>
       <Link href='/'>
           <Logo />
       </Link>

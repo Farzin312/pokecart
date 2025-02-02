@@ -5,7 +5,7 @@ import PokemonWrapper from './wrappers/PokemonWrapper';
 
 function page() {
   return (
-    <div className="h-full flex flex-col items-center justify-center space-y-8">
+    <div className="h-full flex flex-col items-center justify-center space-y-4">
       <Suspense fallback={<Spinner />}>
         <PokemonWrapper>
           <PokemonSpotLight />
