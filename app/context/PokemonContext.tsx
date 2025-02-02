@@ -6,6 +6,7 @@ import Pokemon from "../type/Pokemon";
 interface PokemonContextValue {
   pokemonList: Pokemon[];
   randomPokemon: Pokemon | null;
+  allPokemons: Pokemon[];
 
 }
 
@@ -15,7 +16,8 @@ const PokemonProvider = memo(function PokemonProvider({
   children,
   initialData,
   randomPokemon,
-}: { children: ReactNode; initialData: Pokemon[]; randomPokemon: Pokemon | null }) {
+  allPokemons,
+}: { children: ReactNode; initialData: Pokemon[]; randomPokemon: Pokemon | null; allPokemons: Pokemon[] }) {
   const pokemonList: Pokemon[] = initialData;
 
 
@@ -24,8 +26,9 @@ const PokemonProvider = memo(function PokemonProvider({
     () => ({
       pokemonList,
       randomPokemon,
+      allPokemons,
     }),
-    [pokemonList, randomPokemon]
+    [pokemonList, randomPokemon, allPokemons]
   );
 
   return <PokemonContext.Provider value={contextValue}>{children}</PokemonContext.Provider>;
