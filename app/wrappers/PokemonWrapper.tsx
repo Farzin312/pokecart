@@ -22,6 +22,7 @@ async function PokemonWrapper({ children, searchQuery }: PokemonWrapperProps) {
     const pokemonList = await fetchPokemonByType();
     const randomIndex = Math.floor(Math.random() * pokemonList.length);
     const randomPokemon = pokemonList[randomIndex];
+
     return (
       <PokemonProvider
         initialData={pokemonList}

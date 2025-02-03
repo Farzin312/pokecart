@@ -164,5 +164,89 @@ export async function fetchPokemonBySearch(query: string): Promise<Pokemon[]> {
   }
 }
 
+export async function fetchRecommendedPokemon(
+  selectedPokemon: Pokemon,
+  limit: number = 10
+): Promise<Pokemon[]> {
+  try {
+    // Ensure the selected Pokémon has types
+    if (!selectedPokemon || !selectedPokemon.types) return [];
 
+    // Get the names of the selected Pokémon's types
+    const types = selectedPokemon.types.map(
+      (t: { type: { name: string } }) => t.type.name
+    );
 
+    // For each type, fetch Pokémon that belong to that type
+    const pokemonPromises = types.map(async (type) => {
+      const typeResponse = await fetch(`https://pokeapi.co/api/v2/type/${type}`);
+      const typeData = await typeResponse.json();
+
+      // Get list of Pokémon from this type
+      const availablePokemon = typeData.pokemon.map(
+        (p: { pokemon: { name: string; url: string } }) => ({
+          name: p.pokemon.name,
+          url: p.pokemon.url,
+        })
+      );
+      return availablePokemon;
+    });
+
+    const pokemonByTypes = await Promise.all(pokemonPromises);
+    // Flatten the list from all types
+    let recommendedList = pokemonByTypes.flat();
+
+    // Remove the selected Pokémon from the list
+    recommendedList = recommendedList.filter(
+      (p) => p.name !== selectedPokemon.name
+    );
+
+    // Remove duplicate Pokémon by name
+    const uniqueMap: { [key: string]: { name: string; url: string } } = {};
+    recommendedList.forEach((p) => {
+      uniqueMap[p.name] = p;
+    });
+    const uniqueRecommended = Object.values(uniqueMap);
+
+    // Randomly shuffle and then take the first `limit` results
+    const shuffled = uniqueRecommended.sort(() => 0.5 - Math.random());
+    const selectedRecommended = shuffled.slice(0, limit);
+
+    // Now fetch full details for each recommended Pokémon
+    const fullDetails = await Promise.all(
+      selectedRecommended.map(async (pokemon) => {
+        try {
+          const response = await fetch(
+            `https://pokeapi.co/api/v2/pokemon/${pokemon.name}`
+          );
+          if (!response.ok)
+            throw new Error(`Failed to fetch ${pokemon.name}`);
+          const details = await response.json();
+
+          return {
+            id: details.id,
+            name: details.name,
+            types: details.types,
+            abilities: details.abilities,
+            height: details.height,
+            weight: details.weight,
+            base_experience: details.base_experience,
+            stats: details.stats,
+            sprites: details.sprites,
+          } as Pokemon;
+        } catch (error) {
+          console.error(
+            `Error fetching Pokémon details for ${pokemon.name}:`,
+            error
+          );
+          return null;
+        }
+      })
+    );
+
+    return fullDetails.filter((p): p is Pokemon => p !== null);
+  } catch (error) {
+    console.error("Error fetching recommended Pokémon:", error);
+    return [];
+  }
+}

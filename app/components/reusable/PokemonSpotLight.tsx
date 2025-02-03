@@ -1,13 +1,14 @@
 'use client'
 import Image from "next/image"
+
 import Link from "next/link"
 import { usePokemonContext } from "@/app/context/PokemonContext"
 import { Button } from "./Button"
 import Pokemon from "../../type/Pokemon"
+import GlowEffect from "./GlowEffect"
 
 function PokemonSpotLight() {
-    const { randomPokemon } = usePokemonContext()
-
+    const { randomPokemon, setIsHovered } = usePokemonContext()
     const randPokemon: Pokemon | null = randomPokemon
 
     if (!randPokemon) return (
@@ -17,8 +18,9 @@ function PokemonSpotLight() {
     )
 
     return (
-        <div className='relative flex flex-row items-center justify-center bg-gradient-to-tr from-white to-yellow-100 via-yellow-50  rounded-3xl p-6 '>
-            
+        <div className='relative flex flex-row items-center justify-center bg-gradient-to-tr from-white to-yellow-100 via-yellow-50 rounded-3xl p-6 hover:scale-105 transition-transform duration-150'
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)} >
             {/* Pokémon Image */}
             <Image
                 src={
@@ -30,7 +32,7 @@ function PokemonSpotLight() {
                 width={250}
                 height={250}
                 priority
-                className="rounded-md transition-transform duration-300 hover:scale-110"
+                className="rounded-md transition-transform duration-300 hover:scale-105"
             />
 
             {/* Pokémon Info */}
@@ -46,13 +48,13 @@ function PokemonSpotLight() {
                     Height: {(randPokemon?.height ?? 0) / 10}m | Weight: {(randPokemon?.weight ?? 0) / 10}kg
                 </p>
 
-                {/* Purchase Button with Navigation */}
                 <Link href={`/products/${randPokemon.name}`}>
                     <Button className='mt-4 bg-yellow-300 hover:bg-yellow-400 text-gray-900 font-bold hover:scale-105 transition-transform duration-300'>
                         Catch {randPokemon.name.toUpperCase()} Now! 🔥
                     </Button>
                 </Link>
-            </div>         
+            </div> 
+            <GlowEffect />
         </div>
     )
 }
