@@ -10,8 +10,7 @@ import OrderDetails from './OrderDetails';
 import Pagination from './Pagination';
 import SearchBar from './SearchBar';
 import SearchOrders from './SearchOrders';
-import GlowEffect from './GlowEffect';
 
 
 export { Modal, Button, buttonVariants, Spinner, PokemonCard, PokemonDetails, BackButton, OrderDetails, Pagination, SearchBar, SearchOrders, PokemonType
-    , PokemonSpotLight, GlowEffect };
+    , PokemonSpotLight };

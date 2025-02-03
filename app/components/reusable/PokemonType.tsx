@@ -67,11 +67,9 @@ const PokemonType = memo(function PokemonType({ pokemon }: { pokemon: Pokemon })
               transform: 'rotateY(180deg)',
             }}
           >
-            <p className="text-xs text-gray-700">
-              Ability: <span className="font-semibold capitalize">
-                {pokemon.abilities?.[0]?.ability?.name || 'Hidden Power'}
-              </span>
-            </p>
+            <h2 className="text-xs font-extrabold text-gray-700">
+              {pokemon.name.toLocaleUpperCase()}     
+            </h2>
             <h3 className="text-sm font-semibold capitalize mt-2">${price}.00</h3>
             <Link href={`/products/${pokemon.name}`}>
               <Button

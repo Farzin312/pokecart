@@ -13,12 +13,12 @@ export default async function Page({ searchParams }: PageProps) {
   const searchQuery = resolvedSearchParams.pokemon ?? "";
 
   return (
-    <Suspense fallback={<Spinner />}>
-      <div className="flex items-center justify-center p-4">
+      <div className="flex h-full items-center justify-center p-4">
+        <Suspense fallback={<Spinner />}>
         <PokemonWrapper searchQuery={searchQuery}>
           <SearchedPokemon searchQuery={searchQuery} />
-        </PokemonWrapper>
+        </PokemonWrapper> 
+        </Suspense>
       </div>
-    </Suspense>
   );
 }
