@@ -27,7 +27,7 @@ export default function SearchedPokemon({ searchQuery }: SearchedPokemonProps) {
       const filteredPokemons =
         searchQuery && searchQuery.trim() !== ""
           ? allPokemons.filter((pokemon) =>
-              pokemon.name.toLowerCase().includes(searchQuery.toLowerCase())
+              pokemon.name.toLowerCase().startsWith(searchQuery.toLowerCase())
             )
           : allPokemons;
   
@@ -40,7 +40,6 @@ export default function SearchedPokemon({ searchQuery }: SearchedPokemonProps) {
       setIsLoading(false);
     }, 500);
   
-    // Clean up the timeout if the effect re‑runs before the timer finishes
     return () => clearTimeout(timer);
   }, [currentPage, allPokemons, searchQuery]);
 

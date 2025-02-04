@@ -20,11 +20,11 @@ const PokemonCard = memo(function PokemonCard() {
   });
 
   return (
-    <div className="flex flex-col md:flex-row md:justify-center gap-4">
+    <div className="flex flex-col md:flex-row md:justify-center items-center gap-4">
       {Object.entries(groupedByType).map(([type, pokemons]) => (
         <div
           key={type}
-          className="w-full md:w-[240px] bg-gray-50 opacity-90 rounded-md shadow p-3 hover:scale-105 hover:opacity-100 hover:bg-yellow-50 transition-transform duration-300"
+          className="w-full md:w-[240px] bg-gradient-to-t to-white from-yellow-100 opacity-90 rounded-md shadow p-3 hover:scale-105  hover:opacity-100 transition-transform duration-300"
         >
           {/* Type Heading */}
           <h2 className="text-lg md:text-xl font-semibold capitalize mb-3 text-center">{type} Type Pokémon</h2>

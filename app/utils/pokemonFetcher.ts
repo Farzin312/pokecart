@@ -83,7 +83,7 @@ export async function fetchPokemonByType(): Promise<Pokemon[]> {
 }
 
 {/* Using to retreive 2 random pokemon types for RandomPokemonSearch */}
-export default async function randomPokemonSearchType() {
+export default async function fetchRandomPokemonSearchType() {
     const typeResponse = await fetch(`https://pokeapi.co/api/v2/type/`)
     const typeData = await typeResponse.json()
 
@@ -156,9 +156,10 @@ export async function fetchPokemonBySearch(query: string): Promise<Pokemon[]> {
     const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1304');
     const data = await response.json();
     
+    const normalizedQuery = query.toLowerCase();
     // Filter the list using the query (you can use includes for partial matches)
     const filtered = data.results.filter((pokemon: { name: string; url: string }) =>
-      pokemon.name.includes(query)
+      pokemon.name.toLowerCase().startsWith(normalizedQuery)
     );
     
     // Optionally limit the number of results (for example, the first 20 or your choosing matches)
