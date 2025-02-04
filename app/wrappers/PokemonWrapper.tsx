@@ -4,11 +4,15 @@ import { fetchPokemonByType, fetchPokemonBySearch } from "../utils/pokemonFetche
 interface PokemonWrapperProps {
   children: React.ReactNode;
   searchQuery?: string;
+  typeFilter?: string;
 }
 
-async function PokemonWrapper({ children, searchQuery }: PokemonWrapperProps) {
-  if (searchQuery && searchQuery.trim() !== "") {
-    const searchedPokemons = await fetchPokemonBySearch(searchQuery.toLowerCase());
+async function PokemonWrapper({ children, searchQuery, typeFilter }: PokemonWrapperProps) {
+  if ((searchQuery && searchQuery.trim() !== "") || (typeFilter && typeFilter.trim() !== "")) {
+    const searchedPokemons = await fetchPokemonBySearch(
+      searchQuery ? searchQuery.toLowerCase() : "",
+      typeFilter ? typeFilter.toLowerCase() : undefined
+    );
     return (
       <PokemonProvider
         initialData={[]}

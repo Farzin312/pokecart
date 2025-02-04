@@ -10,7 +10,23 @@ import OrderDetails from './OrderDetails';
 import Pagination from './Pagination';
 import SearchBar from './SearchBar';
 import SearchOrders from './SearchOrders';
+import {  DropdownMenu,
+    DropdownMenuTrigger,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuCheckboxItem,
+    DropdownMenuRadioItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuShortcut,
+    DropdownMenuGroup,
+    DropdownMenuPortal,
+    DropdownMenuSub,
+    DropdownMenuSubContent,
+    DropdownMenuSubTrigger,
+    DropdownMenuRadioGroup, } from './DropdownMenu';
 
 
 export { Modal, Button, buttonVariants, Spinner, PokemonCard, PokemonDetails, BackButton, OrderDetails, Pagination, SearchBar, SearchOrders, PokemonType
-    , PokemonSpotLight };
+    , PokemonSpotLight, DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuCheckboxItem, DropdownMenuRadioItem,
+     DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuGroup, DropdownMenuPortal, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuRadioGroup };

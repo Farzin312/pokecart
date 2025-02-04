@@ -83,7 +83,7 @@ export async function fetchPokemonByType(): Promise<Pokemon[]> {
 }
 
 {/* Using to retreive 2 random pokemon types for RandomPokemonSearch */}
-export default async function fetchRandomPokemonSearchType() {
+export async function fetchRandomPokemonSearchType() {
     const typeResponse = await fetch(`https://pokeapi.co/api/v2/type/`)
     const typeData = await typeResponse.json()
 
@@ -148,43 +148,6 @@ export async function fetchAllPokemon() {
   );
 
   return pokemonDetails;
-}
-
-export async function fetchPokemonBySearch(query: string): Promise<Pokemon[]> {
-  try {
-    // Fetch the list of all Pokémon names and URLs.
-    const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1304');
-    const data = await response.json();
-    
-    const normalizedQuery = query.toLowerCase();
-    // Filter the list using the query (you can use includes for partial matches)
-    const filtered = data.results.filter((pokemon: { name: string; url: string }) =>
-      pokemon.name.toLowerCase().startsWith(normalizedQuery)
-    );
-    
-    // Optionally limit the number of results (for example, the first 20 or your choosing matches)
-    const limited = filtered.slice(0);
-    
-    // Now fetch full details for each matching Pokémon.
-    const pokemonDetails = await Promise.all(
-      limited.map(async (pokemon: { name: string; url: string }) => {
-        const detailsResponse = await fetch(pokemon.url);
-        const detailsData = await detailsResponse.json();
-        return {
-          id: detailsData.id,
-          name: detailsData.name,
-          sprites: detailsData.sprites,
-          types: detailsData.types.map((t: { type: { name: string } }) => t.type.name),
-          // Include any other fields you need
-        } as Pokemon;
-      })
-    );
-    
-    return pokemonDetails;
-  } catch (error) {
-    console.error("Error in fetchPokemonBySearch:", error);
-    return [];
-  }
 }
 
 export async function fetchRecommendedPokemon(
@@ -270,6 +233,79 @@ export async function fetchRecommendedPokemon(
     return fullDetails.filter((p): p is Pokemon => p !== null);
   } catch (error) {
     console.error("Error fetching recommended Pokémon:", error);
+    return [];
+  }
+}
+
+export async function fetchPokemonBySearch(
+  query: string,
+  typeFilter?: string
+): Promise<Pokemon[]> {
+  try {
+    if (typeFilter) {
+      // Fetch Pokémon for the given type.
+      const typeResponse = await fetch(`https://pokeapi.co/api/v2/type/${typeFilter}`);
+      const typeData = await typeResponse.json();
+
+      const availablePokemon: { name: string; url: string }[] = typeData.pokemon.map(
+        (p: { pokemon: { name: string; url: string } }) => ({
+          name: p.pokemon.name,
+          url: p.pokemon.url,
+        })
+      );
+
+      const normalizedQuery = query.toLowerCase();
+      const filtered = query
+        ? availablePokemon.filter((p) =>
+            p.name.toLowerCase().startsWith(normalizedQuery)
+          )
+        : availablePokemon;
+
+      const limited = filtered.slice(0, 20);
+
+      const pokemonDetails = await Promise.all(
+        limited.map(async (pokemon) => {
+          const detailsResponse = await fetch(pokemon.url);
+          const detailsData = await detailsResponse.json();
+          return {
+            id: detailsData.id,
+            name: detailsData.name,
+            sprites: detailsData.sprites,
+            types: detailsData.types.map((t: { type: { name: string } }) => t.type.name),
+          } as Pokemon;
+        })
+      );
+
+      return pokemonDetails;
+    } else {
+      // Fallback: search among all Pokémon by name.
+      const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1304');
+      const data = await response.json();
+
+      const normalizedQuery = query.toLowerCase();
+      const filtered = data.results.filter((pokemon: { name: string; url: string }) =>
+        pokemon.name.toLowerCase().startsWith(normalizedQuery)
+      );
+
+      const limited = filtered.slice(0, 20);
+
+      const pokemonDetails = await Promise.all(
+        limited.map(async (pokemon: { name: string; url: string }) => {
+          const detailsResponse = await fetch(pokemon.url);
+          const detailsData = await detailsResponse.json();
+          return {
+            id: detailsData.id,
+            name: detailsData.name,
+            sprites: detailsData.sprites,
+            types: detailsData.types.map((t: { type: { name: string } }) => t.type.name),
+          } as Pokemon;
+        })
+      );
+
+      return pokemonDetails;
+    }
+  } catch (error) {
+    console.error("Error in fetchPokemonBySearch:", error);
     return [];
   }
 }
