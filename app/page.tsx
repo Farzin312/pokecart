@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 
 import { PokemonCard, PokemonSpotLight, Spinner } from './components/reusable';
+import RandomPokemonSearch from './components/RandomPokemonSearch';
 import PokemonWrapper from './wrappers/PokemonWrapper';
 
 function page() {
@@ -9,7 +10,10 @@ function page() {
       <Suspense fallback={<Spinner />}>
         <PokemonWrapper>
           <PokemonSpotLight />
+          <div className='flex flex-row justify-center'>
           <PokemonCard />
+          <RandomPokemonSearch />
+          </div>
         </PokemonWrapper>  
       </Suspense>
     </div>

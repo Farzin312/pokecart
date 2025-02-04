@@ -5,7 +5,7 @@ import { Button } from './reusable'
 
 function Footer() {
   return (
-    <footer className="w-full bg-gradient-to-r from-yellow-300 to-gray-50 text-gray-700 opacity-90 py-6 px-4 shadow-md">
+    <footer className="w-full bg-gradient-to-r to-yellow-200 from-gray-50 text-gray-700 opacity-80 py-6 px-4 shadow-md">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center">
         {/* Left Section - Logo & About */}
         <div className="mb-4 md:mb-0 text-center md:text-left">

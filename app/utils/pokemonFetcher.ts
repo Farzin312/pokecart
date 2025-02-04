@@ -82,7 +82,29 @@ export async function fetchPokemonByType(): Promise<Pokemon[]> {
   }
 }
 
+{/* Using to retreive 2 random pokemon types for RandomPokemonSearch */}
+export default async function randomPokemonSearchType() {
+    const typeResponse = await fetch(`https://pokeapi.co/api/v2/type/`)
+    const typeData = await typeResponse.json()
 
+    const allTypes = typeData.results.map((type: { name: string }) => type.name);
+
+    // Filter out types that may cause issues
+    const validTypes: string[] = allTypes.filter(
+      (type: string) => type !== "unknown" && type !== "shadow"
+    );
+
+    const selectedTypes: string[] = [];
+    while (selectedTypes.length < 2) {
+      const randomType = validTypes[Math.floor(Math.random() * validTypes.length)];
+      if (!selectedTypes.includes(randomType)) {
+        selectedTypes.push(randomType);
+      }
+    }
+    return selectedTypes
+}
+
+{/* PokemonDetails */}
 export async function fetchPokemon(name: string): Promise<Pokemon> {
   try {
     const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);

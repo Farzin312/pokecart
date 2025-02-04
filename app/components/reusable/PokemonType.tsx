@@ -2,6 +2,7 @@
 import { memo, useMemo, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import Spinner from './Spinner';
 
 import Pokemon from '../../type/Pokemon';
 import { Button } from './Button';
@@ -20,10 +21,13 @@ const PokemonType = memo(function PokemonType({ pokemon }: { pokemon: Pokemon })
       alt={pokemon.name}
       width={100}
       height={100}
-      priority
+      priority = {false}
+      loading='lazy'
       className="rounded-md"
     />
   ), [pokemon]);
+
+  if (!pokemon) return <Spinner />;
 
   return (
     <div

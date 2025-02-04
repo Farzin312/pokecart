@@ -59,7 +59,7 @@ function Navbar() {
       </Link>
       <div
         className={`flex w-full max-w-sm items-center space-x-1 border rounded-md ${
-          searchActive ? "border rounded-md bg-yellow-300 border-gray-50 shadow-lg" : ""
+          searchActive ? "border rounded-md bg-white border-gray-400 shadow-lg" : ""
         }`}
       >
         <SearchBar
@@ -70,7 +70,7 @@ function Navbar() {
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-          className={searchActive ? "focus-visible:ring-yellow-300" : ""}
+          className={searchActive ? "focus-visible:ring-gray-400" : ""}
         />
         <Button className="text-2xl" variant="link" onClick={handleSearch}>
           🔎
