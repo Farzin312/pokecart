@@ -16,7 +16,7 @@ interface RandomPokemonSearchProps {
 
 export default function RandomPokemonSearch({ randomTypeData }: RandomPokemonSearchProps) {
   return (
-    <div className="flex flex-row justify-center gap-4 lg:flex-col">
+    <div className="flex flex-row justify-center gap-4">
       {randomTypeData.map(({ type, randomPokemon }) => (
         <div
           key={type}

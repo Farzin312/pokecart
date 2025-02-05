@@ -46,10 +46,9 @@ export default async function page() {
     <div className="h-full flex flex-col items-center justify-center space-y-4">
       <Suspense fallback={<Spinner />}>
         <PokemonWrapper>
-          <div>
-            <PokemonSpotLight />
-          </div>
-          <div className="flex flex-col justify-center space-y-4 lg:flex-row lg:space-x-4">
+          <PokemonSpotLight />
+      
+          <div className="flex flex-col justify-center items-center space-y-4">
             <PokemonCard />
             <RandomPokemonSearch randomTypeData={randomTypeData} />
           </div>

@@ -47,8 +47,8 @@ export default function SearchedPokemon({ searchQuery }: SearchedPokemonProps) {
     <div className="p-4">
       <h1 className="flex justify-center text-xl font-bold">
         {searchQuery && searchQuery.trim() !== ""
-          ? `Search Results for "${searchQuery}"`
-          : "Featured Pokémon"}
+          ? `${allPokemons.length} Results for "${searchQuery}"`
+          : `${allPokemons.length} Featured Pokémon"`}
       </h1>
 
       {isLoading ? (

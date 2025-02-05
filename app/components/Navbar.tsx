@@ -76,11 +76,11 @@ function Navbar() {
       </Link>
 
       {/* Styled Search Container */}
-      <div className="flex w-full max-w-md items-center bg-yellow-300 border border-gray-300 rounded-md shadow-md">
+      <div className="flex w-full max-w-md items-center px-2">
         {/* Dropdown Type Filter */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="bg-yellow-300 hover:bg-yellow-400 px-3 py-1">
+            <Button variant="outline" className="bg-yellow-300 hover:bg-yellow-300 px-3 py-1">
               {selectedType === "all" ? "All Types" : selectedType.toUpperCase()} ⏷
             </Button>
           </DropdownMenuTrigger>
