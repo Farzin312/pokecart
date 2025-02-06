@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Pokecart",
-  description: "Your one stop shop for all Pokemons!",
+  description: "Explore every Pokémon's stats and find the best Pokémon merchandise on Amazon with our curated affiliate links. Shop plushies, figures, and more—all in one place! Plus, stay tuned for our upcoming 5% cashback reward on Pokémon purchases made through our links.",
 };
 
 export default function RootLayout({

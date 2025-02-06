@@ -13,6 +13,23 @@ interface PokemonDetailsProps {
 function PokemonDetails({ selectedPokemon, similarPokemons }: PokemonDetailsProps) {
   const [quantity, setQuantity] = useState(1); // Track quantity for cart
 
+  function handleAmazonAffiliateLinkPlushies(pokemonName: string) {
+    const baseUrl = process.env.NEXT_PUBLIC_AMAZON_BASE_URL;
+    const category = process.env.NEXT_PUBLIC_AMAZON_CATEGORY;
+    const affiliateTag = process.env.NEXT_PUBLIC_AMAZON_AFFILIATE_TAG;
+    const linkCode = process.env.NEXT_PUBLIC_AMAZON_LINK_CODE;
+    const language = process.env.NEXT_PUBLIC_AMAZON_LANGUAGE;
+    const refTag = process.env.NEXT_PUBLIC_AMAZON_REF;
+  
+    const searchQuery = `${pokemonName}+plushies`;
+  
+    // Construct the Amazon affiliate link
+    const amazonUrl = `${baseUrl}?k=${encodeURIComponent(searchQuery)}&i=${category}&linkCode=${linkCode}&tag=${affiliateTag}&language=${language}&ref_=${refTag}`;
+  
+    return amazonUrl;
+  }
+
+
   if (!selectedPokemon)
     return <h1 className="text-center text-gray-500 text-lg">No Pokémon available.</h1>;
 
@@ -118,7 +135,8 @@ function PokemonDetails({ selectedPokemon, similarPokemons }: PokemonDetailsProp
           <Button className="w-full bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-bold rounded-full transition-transform hover:scale-105">
             Add to Cart 🛒
           </Button>
-          <Link href={`/checkout/${selectedPokemon.name}`} className="mt-4">
+          <Link href={handleAmazonAffiliateLinkPlushies(selectedPokemon.name)} target="_blank"
+                rel="noopener noreferrer" className="mt-4">
             <Button
               variant="destructive"
               className="w-full font-bold rounded-full transition-transform hover:scale-105"
