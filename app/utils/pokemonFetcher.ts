@@ -261,7 +261,7 @@ export async function fetchPokemonBySearch(
           )
         : availablePokemon;
 
-      const limited = filtered.slice(0, 20);
+      const limited = filtered.slice(0);
 
       const pokemonDetails = await Promise.all(
         limited.map(async (pokemon) => {

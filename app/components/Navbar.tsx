@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { signOut, onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "@/firebaseConfig";
 import Logo from "./Logo";
@@ -15,7 +16,7 @@ import {
 const POKEMON_TYPES = [
   "all", "normal", "fire", "water", "grass", "electric", "ice",
   "fighting", "poison", "ground", "flying", "psychic", "bug",
-  "rock", "ghost", "dragon", "dark", "steel", "fairy"
+  "rock", "ghost", "dragon", "dark", "steel", "fairy", 
 ];
 
 function Navbar() {
@@ -67,7 +68,7 @@ function Navbar() {
 
   return (
     <nav
-      className={`flex w-full justify-between items-center bg-gradient-to-r from-white to-yellow-100 opacity-80 shadow-md rounded-md px-2 ${
+      className={`flex w-full justify-between items-center bg-gradient-to-r from-white to-yellow-100 opacity-80 shadow-md rounded-md px-6 ${
         searchActive ? "opacity-100" : ""
       }`}
     >
@@ -76,16 +77,16 @@ function Navbar() {
       </Link>
 
       {/* Styled Search Container */}
-      <div className="flex w-full max-w-md items-center px-2">
+      <div className="flex min-w-12 items-center px-2 lg:w-6/12 space-x-1">
         {/* Dropdown Type Filter */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="bg-yellow-300 hover:bg-yellow-300 px-3 py-1">
+            <Button variant="outline" className="bg-yellow-300 hover:bg-yellow-400 px-3 py-1">
               {selectedType === "all" ? "All Types" : selectedType.toUpperCase()} ⏷
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-32 bg-yellow-100 border border-yellow-300 shadow-lg rounded-md max-h-[200px] overflow-y-auto">
-            <DropdownMenuLabel className="text-gray-700">Filter by Type</DropdownMenuLabel>
+            <DropdownMenuLabel className="text-gray-700 border-b-2 border-yellow-300">Filter by Type</DropdownMenuLabel>
             <DropdownMenuSeparator />
             {/* 'All' Option */}
             <DropdownMenuCheckboxItem
@@ -106,8 +107,9 @@ function Navbar() {
           </DropdownMenuContent>
         </DropdownMenu>
 
-        {/* Search Bar */}
-        <SearchBar
+        <div className="flex w-full border border-yellow-300 rounded-md">
+       {/* Search Bar */} 
+       <SearchBar
           type="text"
           placeholder="Search Pokémon 🤩"
           onFocus={handleFocus}
@@ -115,13 +117,14 @@ function Navbar() {
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-          className="w-full focus:ring-2 focus:ring-yellow-400 rounded-md px-2 py-1 bg-yellow-100"
+          className="w-full rounded-md px-2 py-1 bg-yellow-100 hover:border-yellow-400"
         />
 
         {/* Search Button */}
-        <Button className="text-2xl bg-yellow-300 hover:bg-yellow-400 px-3 py-1" variant="ghost" onClick={handleSearch}>
-          🔎
+        <Button className="text-2xl px-3 py-1 hover:bg-trasnparent hover:border hover:border-yellow-400" variant="ghost" onClick={handleSearch}>
+          <Image src="/search.png" alt="Search" width={35} height={35} />
         </Button>
+        </div>
       </div>
 
       <ul className="flex space-x-4">

@@ -18,7 +18,7 @@ function PokemonSpotLight() {
     )
 
     return (
-        <div className='relative flex flex-row items-center justify-center bg-gradient-to-tr from-white to-yellow-100 via-yellow-50 rounded-3xl p-6 hover:scale-105 transition-transform duration-150'
+        <div className='relative flex flex-col lg:flex-row items-center justify-center bg-gradient-to-tr from-white to-yellow-100 via-yellow-50 rounded-3xl p-6 hover:scale-105 transition-transform duration-150'
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)} >
             {/* Pokémon Image */}
