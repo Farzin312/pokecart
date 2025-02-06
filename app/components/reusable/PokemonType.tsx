@@ -30,7 +30,7 @@ const PokemonType = memo(function PokemonType({ pokemon }: { pokemon: Pokemon })
   if (!pokemon) return <Spinner />;
 
   return (
-    <div
+    <li
       className="p-2 border border-gray-300 rounded-md shadow-sm bg-white flex flex-col items-center hover:scale-105 transition-transform duration-300"
       style={{ perspective: '1000px' }} // adds perspective for the 3D effect
       onMouseEnter={() => setIsFlipped(true)}
@@ -87,7 +87,7 @@ const PokemonType = memo(function PokemonType({ pokemon }: { pokemon: Pokemon })
           </div>
         </div>
       </div>
-    </div>
+    </li>
   );
 });
 

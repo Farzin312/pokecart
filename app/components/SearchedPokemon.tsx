@@ -58,11 +58,11 @@ export default function SearchedPokemon({ searchQuery }: SearchedPokemonProps) {
       ) : (
         <>
       {currentPokemons.length > 0 ? (
-        <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mt-4">
+        <ul className="grid grid-cols-2 md:grid-cols-6 gap-4 mt-4">
           {currentPokemons.map((pokemon) => (
             <PokemonType key={pokemon.name} pokemon={pokemon} />
           ))}
-        </div>
+        </ul>
       ) : (
         <p className="text-gray-500 mt-4">No Pokémon found.</p>
       )}
