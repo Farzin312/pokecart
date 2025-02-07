@@ -59,10 +59,8 @@ const PokemonType = memo(function PokemonType({ pokemon }: { pokemon: Pokemon })
           <div
             className="absolute inset-0 flex items-center justify-center"
             style={{ backfaceVisibility: 'hidden' }}
-          >
-            <Link href={`/products/${pokemon.name}`}>
+          >       
               {memoizedImage}
-            </Link>
           </div>
           {/* Back side: details */}
           <div
