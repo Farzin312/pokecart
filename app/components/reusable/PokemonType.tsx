@@ -24,6 +24,7 @@ const PokemonType = memo(function PokemonType({ pokemon }: { pokemon: Pokemon })
       priority = {false}
       loading='lazy'
       className="rounded-md"
+      unoptimized
     />
   ), [pokemon]);
 

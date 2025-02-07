@@ -54,6 +54,7 @@ function PokemonDetails({ selectedPokemon, similarPokemons }: PokemonDetailsProp
             height={300}
             priority
             className="rounded-lg"
+            unoptimized
           />
         </div>
 
