@@ -33,6 +33,7 @@ function PokemonSpotLight() {
                 height={250}
                 priority
                 className="rounded-md transition-transform duration-300 hover:scale-105"
+                unoptimized
             />
 
             {/* Pokémon Info */}

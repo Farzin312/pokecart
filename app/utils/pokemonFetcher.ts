@@ -4,7 +4,7 @@ export async function fetchPokemonByType(): Promise<Pokemon[]> {
   try {
     // Fetch all Pokémon types
     const typesResponse = await fetch(`https://pokeapi.co/api/v2/type/`, {
-      next: { revalidate: 60 },
+      next: { revalidate: 300 },
     });
     const typesData = await typesResponse.json();
     const allTypes = typesData.results.map((type: { name: string }) => type.name);
