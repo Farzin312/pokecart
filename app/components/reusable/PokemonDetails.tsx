@@ -164,6 +164,7 @@ function PokemonDetails({ selectedPokemon, similarPokemons }: PokemonDetailsProp
                     width={80}
                     height={80}
                     className="rounded-md"
+                    unoptimized
                   />
                   <p className="text-center text-sm mt-2 capitalize">{poke.name}</p>
                 </div>
