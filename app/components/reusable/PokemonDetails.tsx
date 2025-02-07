@@ -37,7 +37,7 @@ function PokemonDetails({ selectedPokemon, similarPokemons }: PokemonDetailsProp
     <div className="flex flex-col lg:flex-row items-center justify-center text-gray-900 p-8 gap-12 md:flex-row">
       {/* Left Section - Pokémon Showcase */}
       <div className="p-8 max-w-xl text-center">
-        <h2 className="text-5xl font-extrabold capitalize drop-shadow-md">
+        <h2 className="text-3xl lg:text-5xl font-extrabold capitalize drop-shadow-md">
           {selectedPokemon.name}
         </h2>
 
@@ -73,7 +73,7 @@ function PokemonDetails({ selectedPokemon, similarPokemons }: PokemonDetailsProp
         </p>
 
         {/* Pokémon Stats - Animated Progress Bars */}
-        <div className="mt-6 w-full">
+        <div className="items-center justify-center mt-6 w-full">
           <h3 className="text-xl font-bold text-gray-700 mb-2">Stats</h3>
           {selectedPokemon.stats?.map((s) => (
             <div key={s.stat.name} className="mb-2">
@@ -102,7 +102,7 @@ function PokemonDetails({ selectedPokemon, similarPokemons }: PokemonDetailsProp
       {/* Right Section - Purchase, Cart, and Similar Pokémon */}
       <div className="rounded-lg p-8 max-w-lg flex flex-col items-center">
         {/* Purchase & Cart */}
-        <h3 className="text-3xl font-bold text-gray-800">
+        <h3 className="text-2xl lg:text-3xl font-bold text-gray-800">
           Buy {selectedPokemon.name}!
         </h3>
         <p className="text-gray-600 text-md mt-2">
@@ -132,28 +132,28 @@ function PokemonDetails({ selectedPokemon, similarPokemons }: PokemonDetailsProp
         </p>
 
         {/* Purchase Buttons */}
-        <div className="mt-6 flex flex-col w-full">
-          <Button className="w-full bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-bold rounded-full transition-transform hover:scale-105">
+        <div className="mt-6 flex flex-col justify-center items-center space-y-3 w-full">
+          <Button variant='outline' 
+          className="w-6/12 bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-bold rounded-full transition-transform hover:scale-105 lg:w-full">
             Add to Cart 🛒
           </Button>
-          <Link href={handleAmazonAffiliateLinkPlushies(selectedPokemon.name)} target="_blank"
-                rel="noopener noreferrer" className="mt-4">
-            <Button
+          <Button
               variant="destructive"
-              className="w-full font-bold rounded-full transition-transform hover:scale-105"
+              className="w-6/12 font-bold rounded-full transition-transform hover:scale-105 lg:w-full"
             >
+          <Link href={handleAmazonAffiliateLinkPlushies(selectedPokemon.name)} target="_blank" rel="noopener noreferrer">       
               Buy Now 🔥
-            </Button>
           </Link>
+          </Button>
         </div>
 
         {/* Similar Pokémon List */}
-        <div className="mt-8 w-full">
+        <div className="mt-8 w-full h-auto">
           <h4 className="flex justify-center text-2xl font-bold text-gray-800 mb-4">Similar Pokémon</h4>
-          <div className="flex space-x-4 overflow-x-auto">
+          <div className="md:flex overflow-x-auto grid grid-cols-2 gap-4">
             {similarPokemons.map((poke) => (
               <Link key={poke.id} href={`/products/${poke.name}`}>
-                <div className="min-w-[100px] p-2 border border-gray-200 rounded-lg shadow hover:scale-105 transition-transform">
+                <div className="min-w-[125px] min-h-[150px] py-2 border flex flex-col items-center justify-center border-gray-200 rounded-lg shadow hover:scale-105 transition-transform">
                   <Image
                     src={
                       poke.sprites?.other?.['official-artwork']?.front_default ||
