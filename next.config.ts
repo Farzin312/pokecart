@@ -3,6 +3,7 @@ import MillionLint from "@million/lint";
 
 const nextConfig: NextConfig = {
   images: {
+    dangerouslyAllowSVG: true,
     remotePatterns: [
       {
         protocol: "https",

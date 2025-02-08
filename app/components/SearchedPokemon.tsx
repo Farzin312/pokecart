@@ -2,15 +2,17 @@
 import { useState, useEffect } from "react";
 import  Pokemon  from "../type/Pokemon"; // Adjust the import path as necessary
 import { usePokemonContext } from "../context/PokemonContext";
-import { PokemonType, Pagination, Spinner } from "./reusable";
+import { PokemonType, Pagination, Spinner, PokemonTypeImage } from "./reusable";
+
 
 interface SearchedPokemonProps {
   searchQuery?: string;
 }
 
 export default function SearchedPokemon({ searchQuery }: SearchedPokemonProps) {
-  const { allPokemons } = usePokemonContext();
+  const { allPokemons, randomType = "all" } = usePokemonContext();
   const itemsPerPage = 30;
+
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
@@ -45,10 +47,22 @@ export default function SearchedPokemon({ searchQuery }: SearchedPokemonProps) {
 
   return (
     <div className="p-4">
-      <h1 className="flex justify-center text-xl font-bold">
+      <h1 className="flex flex-row justify-center text-xl font-bold items-center space-x-2">
         {searchQuery && searchQuery.trim() !== ""
           ? `${allPokemons.length} Results for "${searchQuery}"`
-          : `${allPokemons.length} Featured Pokémon"`}
+          : (
+            <>
+           <div>
+            
+              {allPokemons.length} Results for 
+            </div>
+            <div>
+            <PokemonTypeImage imageType={randomType} />
+              </div>
+            </>
+          )}
+          
+        
       </h1>
 
       {isLoading ? (
@@ -58,7 +72,7 @@ export default function SearchedPokemon({ searchQuery }: SearchedPokemonProps) {
       ) : (
         <>
       {currentPokemons.length > 0 ? (
-        <ul className="grid grid-cols-2 md:grid-cols-6 gap-4 mt-4">
+        <ul className="grid grid-cols-2 md:grid-cols-6 gap-4 mt-4 space-x-2">
           {currentPokemons.map((pokemon) => (
             <PokemonType key={pokemon.name} pokemon={pokemon} />
           ))}

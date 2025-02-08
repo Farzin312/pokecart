@@ -1,23 +1,20 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { signOut, onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "@/firebaseConfig";
 import Logo from "./Logo";
-import Link from "next/link";
+import { PokemonTypeImage, POKEMON_TYPES } from  './reusable'
+import '@/public/styles.css';
+
 import { 
   Button, SearchBar, DropdownMenu, DropdownMenuCheckboxItem,
   DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator,
   DropdownMenuTrigger
 } from "./reusable";
-
-const POKEMON_TYPES = [
-  "all", "normal", "fire", "water", "grass", "electric", "ice",
-  "fighting", "poison", "ground", "flying", "psychic", "bug",
-  "rock", "ghost", "dragon", "dark", "steel", "fairy", 
-];
 
 function Navbar() {
   const [searchActive, setSearchActive] = useState(false);
@@ -92,16 +89,22 @@ function Navbar() {
             <DropdownMenuCheckboxItem
               checked={selectedType === "all"}
               onCheckedChange={() => setSelectedType("all")}
+              className="flex flex-row pl-6 "
             >
+              <div className="icon mr-2">
+                <Image src="/icons/all.svg" alt="All" width={40} height={40} />
+              </div>
               All
             </DropdownMenuCheckboxItem>
-            {POKEMON_TYPES.filter(type => type !== "all").map((type) => (
+            {POKEMON_TYPES.map((type) => (
               <DropdownMenuCheckboxItem
                 key={type}
                 checked={selectedType === type}
                 onCheckedChange={() => setSelectedType(type)}
+                className="flex items-center space-x-2"
               >
-                {type.charAt(0).toUpperCase() + type.slice(1)}
+                <PokemonTypeImage imageType={type} />
+                <span>{type.charAt(0).toUpperCase() + type.slice(1)}</span>
               </DropdownMenuCheckboxItem>
             ))}
           </DropdownMenuContent>

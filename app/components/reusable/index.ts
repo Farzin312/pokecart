@@ -25,8 +25,10 @@ import {  DropdownMenu,
     DropdownMenuSubContent,
     DropdownMenuSubTrigger,
     DropdownMenuRadioGroup, } from './DropdownMenu';
+    import {PokemonTypeImage, POKEMON_TYPES} from './PokemonTypeImage';
 
 
 export { Modal, Button, buttonVariants, Spinner, PokemonCard, PokemonDetails, BackButton, OrderDetails, Pagination, SearchBar, SearchOrders, PokemonType
     , PokemonSpotLight, DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuCheckboxItem, DropdownMenuRadioItem,
-     DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuGroup, DropdownMenuPortal, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuRadioGroup };
+     DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuGroup, DropdownMenuPortal, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuRadioGroup,
+    PokemonTypeImage, POKEMON_TYPES };

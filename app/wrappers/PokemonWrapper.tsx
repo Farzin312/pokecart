@@ -18,6 +18,7 @@ async function PokemonWrapper({ children, searchQuery, typeFilter }: PokemonWrap
         initialData={[]}
         randomPokemon={null}
         allPokemons={searchedPokemons}
+        randomType={typeFilter ? typeFilter.toLowerCase() : undefined}
       >
         {children}
       </PokemonProvider>

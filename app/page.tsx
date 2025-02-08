@@ -6,10 +6,9 @@ import {fetchRandomPokemonSearchType, fetchPokemon } from './utils/pokemonFetche
 
 export default async function page() {
   async function getRandomTypeAndPokemon() {
-    const types = await fetchRandomPokemonSearchType();
-
+    const typesOfPokemon = await fetchRandomPokemonSearchType();
     const typeData = await Promise.all(
-      types.map(async (type) => {
+      typesOfPokemon.map(async (type) => {
         try {
           const res = await fetch(`https://pokeapi.co/api/v2/type/${type}`);
           const data = await res.json();
@@ -47,7 +46,6 @@ export default async function page() {
       <Suspense fallback={<Spinner />}>
         <PokemonWrapper>
           <PokemonSpotLight />
-      
           <div className="flex flex-col justify-center items-center space-y-4">
             <PokemonCard />
             <RandomPokemonSearch randomTypeData={randomTypeData} />
