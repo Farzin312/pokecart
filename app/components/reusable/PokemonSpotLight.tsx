@@ -4,6 +4,7 @@ import { useState } from "react"
 import Link from "next/link"
 import { usePokemonContext } from "@/app/context/PokemonContext"
 import { Button } from "./Button"
+import { PokemonTypeImage } from "./PokemonTypeImage"
 import Pokemon from "../../type/Pokemon"
 
 function PokemonSpotLight() {
@@ -42,9 +43,10 @@ function PokemonSpotLight() {
                 <p className="mt-2 text-lg italic text-gray-700">
                     {randPokemon?.name} is known for its <span className="font-semibold">{randPokemon?.abilities?.[0]?.ability?.name || "mystical powers"}!</span>
                 </p>
-                <p className="text-sm mt-1">
+                <h3 className="text-sm mt-1 flex flex-row items-center gap-2">
                     Type: <span className="capitalize font-bold text-gray-900">{randPokemon?.types?.[0]?.type?.name}</span>
-                </p>
+                         {randPokemon?.types?.[0]?.type?.name && <PokemonTypeImage imageType={randPokemon.types[0].type.name} />}
+                </h3>
                 <p className="text-sm">
                     Height: {(randPokemon?.height ?? 0) / 10}m | Weight: {(randPokemon?.weight ?? 0) / 10}kg
                 </p>

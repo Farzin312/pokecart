@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Pokemon from '@/app/type/Pokemon';
 import { Button } from './Button';
+import { PokemonTypeImage } from './PokemonTypeImage';
 
 interface PokemonDetailsProps {
   selectedPokemon: Pokemon | null;
@@ -59,12 +60,19 @@ function PokemonDetails({ selectedPokemon, similarPokemons }: PokemonDetailsProp
         </div>
 
         {/* Pokémon Type & Abilities */}
-        <p className="mt-2 text-lg font-semibold text-yellow-600">
-          Type:{' '}
-          <span className="capitalize">
-            {selectedPokemon.types?.map((t) => t.type.name).join(', ') || 'Unknown'}
+        <h3 className="flex flex-row flex-wrap mt-2 text-lg font-semibold text-yellow-600">
+           Type:{' '}
+          <span className="flex flex-row flex-wrap capitalize ml-1 space-x-2">
+            {selectedPokemon.types?.map((t, index) => (
+              <span key={index} className="flex items-center space-x-1">
+                <span>{t.type.name}</span>
+                <PokemonTypeImage imageType={t.type.name} />
+                {index < (selectedPokemon.types?.length ?? 0) - 1 && <span>,</span>}
+              </span>
+            )) || <span>Unknown</span>}
           </span>
-        </p>
+        </h3>
+
         <p className="text-lg font-semibold text-yellow-600">
           Abilities:{' '}
           <span className="capitalize">

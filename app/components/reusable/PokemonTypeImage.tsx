@@ -2,24 +2,10 @@ import Image from "next/image";
 import '@/public/styles.css';
 
 export const POKEMON_TYPES: string[] = [
-    "normal",
-    "fire",
-    "water",
-    "grass",
-    "electric",
-    "ice",
-    "fighting",
-    "poison",
-    "ground",
-    "flying",
-    "psychic",
-    "bug",
-    "rock",
-    "ghost",
-    "dragon",
-    "dark",
-    "steel",
-    "fairy",
+    "normal", "fire", "water", "grass", "electric",
+    "ice", "fighting", "poison", "ground", "flying", 
+    "psychic", "bug", "rock", "ghost", "dragon", "dark", 
+    "steel", "fairy",
   ];
   
 
