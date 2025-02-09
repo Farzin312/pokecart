@@ -4,6 +4,7 @@
 
 :root {
     color: black;
+    --font-baloo: 'Baloo 2', sans-serif;
 }
 
 @layer base {
@@ -68,5 +69,6 @@
     }
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-baloo);
     }
 }
