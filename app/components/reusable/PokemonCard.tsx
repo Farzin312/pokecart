@@ -57,7 +57,7 @@ const PokemonCard = memo(function PokemonCard() {
         {groups.map(({ type, pokemons }) => (
           <div
             key={type}
-            className="w-full md:w-[300px] bg-gradient-to-t to-white from-yellow-100 opacity-90 rounded-md shadow-lg p-5 hover:scale-105 hover:opacity-100 transition-transform duration-300"
+            className="w-full md:w-[250px] bg-gradient-to-t to-white from-yellow-100 opacity-90 rounded-md shadow-lg p-5 hover:scale-105 hover:opacity-100 transition-transform duration-300"
           >
             <h2 className="text-lg md:text-xl font-semibold capitalize mb-3 text-center flex flex-row items-center justify-center space-x-2">
               <div>Featured {type}</div>
