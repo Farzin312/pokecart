@@ -60,7 +60,7 @@ function PokemonDetails({ selectedPokemon, similarPokemons }: PokemonDetailsProp
         </div>
 
         {/* Pokémon Type & Abilities */}
-        <h3 className="flex flex-row flex-wrap mt-2 text-lg font-semibold text-yellow-600">
+        <h3 className="flex flex-row justify-center flex-wrap mt-2 text-lg font-semibold text-yellow-600">
            Type:{' '}
           <span className="flex flex-row flex-wrap capitalize ml-1 space-x-2">
             {selectedPokemon.types?.map((t, index) => (

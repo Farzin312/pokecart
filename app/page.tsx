@@ -46,7 +46,7 @@ export default async function page() {
       <Suspense fallback={<Spinner />}>
         <PokemonWrapper>
           <PokemonSpotLight />
-          <div className="flex flex-col justify-center items-center space-y-4">
+          <div className="flex flex-col justify-center items-center space-y-4">         
             <PokemonCard />
             <RandomPokemonSearch randomTypeData={randomTypeData} />
           </div>
