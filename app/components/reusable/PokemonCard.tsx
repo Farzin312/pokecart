@@ -4,6 +4,8 @@ import React, { memo } from 'react';
 import PokemonType from './PokemonType';
 import { usePokemonContext } from '@/app/context/PokemonContext';
 import { PokemonTypeImage } from './PokemonTypeImage';
+import Pokemon from '@/app/type/Pokemon';
+
 
 const PokemonCard = memo(function PokemonCard() {
   const { pokemonList } = usePokemonContext();
@@ -11,9 +13,9 @@ const PokemonCard = memo(function PokemonCard() {
   
 
   // Group Pokémon by type
-  const groupedByType= {};
+  const groupedByType: { [key: string]: Pokemon[] } = {};
   pokemonList.forEach((pokemon) => {
-    const type = pokemon.type || 'Unknown'; // Ensure there's always a type
+    const type = pokemon.type || 'Unknown'; 
     if (!groupedByType[type]) {
       groupedByType[type] = [];
     }
@@ -29,7 +31,7 @@ const PokemonCard = memo(function PokemonCard() {
         >
           {/* Type Heading */}
           <h2 className="text-lg md:text-xl font-semibold capitalize mb-3 text-center flex flex-row items-center justify-center space-x-2">
-            <div>{type}</div>
+            <div> Featured {type}</div>
             <div>{<PokemonTypeImage imageType={type}/>}</div>
             </h2>
 

@@ -20,7 +20,7 @@ export default function RandomPokemonSearch({ randomTypeData }: RandomPokemonSea
       {randomTypeData.map(({ type, randomPokemon }) => (
         <li
           key={type}
-          className="w-full md:w-[180px] bg-gradient-to-t to-white from-yellow-100 opacity-90 rounded-md shadow p-2 hover:scale-105 hover:opacity-100 transition-transform duration-300 "
+          className="w-full md:w-[200px] bg-gradient-to-t to-white from-yellow-100 opacity-90 rounded-md shadow p-2 hover:scale-105 hover:opacity-100 transition-transform duration-300 "
         >
           <h2 className="text-base md:text-lg font-semibold capitalize mb-2 text-center flex flex-row items-center justify-center space-x-2">
             <div>{type}</div>
