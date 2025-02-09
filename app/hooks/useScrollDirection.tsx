@@ -1,4 +1,3 @@
-// hooks/useScrollDirection.ts
 "use client";
 
 import { useState, useEffect, useRef } from "react";
@@ -6,15 +5,16 @@ import { useState, useEffect, useRef } from "react";
 export default function useScrollDirection() {
   const [show, setShow] = useState(true);
   const lastScrollY = useRef(0);
+  const scrollDisabled = useRef(false);
 
   useEffect(() => {
     const handleScroll = () => {
+      if (scrollDisabled.current) return; 
+
       if (window.scrollY < lastScrollY.current) {
-        // Scrolling up
         setShow(true);
       } else {
-        // Scrolling down
-        setShow(false);
+        setShow(false); 
       }
       lastScrollY.current = window.scrollY;
     };
@@ -23,5 +23,6 @@ export default function useScrollDirection() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  return show;
+
+  return { show };
 }

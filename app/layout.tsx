@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full">
       <body
-        className={`${baloo.variable} antialiased flex flex-col h-full items-center bg-gradient-to-r from-white to-yellow-100 font-baloo overflow-x-hidden`}
+        className={`${baloo.variable} antialiased flex flex-col h-full items-center bg-gradient-to-r from-white to-yellow-50 font-baloo overflow-x-hidden`}
       >
         {/* Only one navbar will show on a given viewport */}
         <div>

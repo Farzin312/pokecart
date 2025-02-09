@@ -27,7 +27,7 @@ function MobileNavbar() {
   const [selectedType, setSelectedType] = useState<string>("all");
   const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
-  const showNavbar = useScrollDirection();
+  const {show} = useScrollDirection();
 
   // Update isMobile based on the current window width
   useEffect(() => {
@@ -78,7 +78,7 @@ function MobileNavbar() {
   return (
     <div
       className={`fixed top-0 left-0 right-0 z-50 transition-transform duration-300 ${
-        showNavbar ? "translate-y-0" : "-translate-y-full"
+        show ? "translate-y-0" : "-translate-y-full"
       }`}
     >
       {/* Top Navbar with a smaller height */}

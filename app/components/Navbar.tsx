@@ -27,8 +27,8 @@ function Navbar() {
   const [selectedType, setSelectedType] = useState<string>("all");
   const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
-  const showNavbar = useScrollDirection();
   const [isMobile, setIsMobile] = useState(false);
+  const { show } = useScrollDirection();
 
   // Hide the desktop navbar on mobile devices
   useEffect(() => {
@@ -79,7 +79,7 @@ function Navbar() {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 flex justify-between items-center bg-gradient-to-r from-white to-yellow-100 opacity-80 shadow-md px-6 h-[50px] transition-transform duration-300 ${
-        showNavbar ? "translate-y-0" : "-translate-y-full"
+        show ? "translate-y-0" : "-translate-y-full"
       } ${searchActive ? "opacity-100" : ""}`}
     >
       <Link href="/">

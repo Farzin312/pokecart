@@ -16,7 +16,7 @@ export async function fetchPokemonByType(): Promise<Pokemon[]> {
 
     // Select three distinct random types
     const selectedTypes: string[] = [];
-    while (selectedTypes.length < 3) {
+    while (selectedTypes.length < 4) {
       const randomType = validTypes[Math.floor(Math.random() * validTypes.length)];
       if (!selectedTypes.includes(randomType)) {
         selectedTypes.push(randomType);
@@ -95,7 +95,7 @@ export async function fetchRandomPokemonSearchType() {
     );
 
     const selectedTypes: string[] = [];
-    while (selectedTypes.length < 2) {
+    while (selectedTypes.length < 3) {
       const randomType = validTypes[Math.floor(Math.random() * validTypes.length)];
       if (!selectedTypes.includes(randomType)) {
         selectedTypes.push(randomType);

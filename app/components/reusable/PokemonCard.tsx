@@ -60,7 +60,7 @@ const PokemonCard = memo(function PokemonCard() {
             className="w-full md:w-[250px] bg-gradient-to-t to-white from-yellow-100 opacity-90 rounded-md shadow-lg p-5 hover:scale-105 hover:opacity-100 transition-transform duration-300"
           >
             <h2 className="text-lg md:text-xl font-semibold capitalize mb-3 text-center flex flex-row items-center justify-center space-x-2">
-              <div>Featured {type}</div>
+              <div>Featuring</div>
               <div>
                 <PokemonTypeImage imageType={type} />
               </div>
@@ -79,7 +79,7 @@ const PokemonCard = memo(function PokemonCard() {
         <div className="relative group">
           {/* Header: Shows active type and its icon */}
           <h2 className="w-full px-4 text-3xl font-bold text-gray-800 mb-4 flex justify-center items-center">
-            <span>Featured {activeGroup.type}</span>
+            <span>Featuring</span>
             <span className="ml-2">
               <PokemonTypeImage imageType={activeGroup.type} />
             </span>
