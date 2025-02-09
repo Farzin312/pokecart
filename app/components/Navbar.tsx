@@ -149,7 +149,7 @@ function Navbar() {
             variant="ghost"
             onClick={handleSearch}
           >
-            <Image src="/search.png" alt="Search" width={35} height={35} />
+            <Image src="/search.png" alt="Search" width={35} height={35} unoptimized />
           </Button>
         </div>
       </div>

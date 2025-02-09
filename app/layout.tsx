@@ -29,9 +29,15 @@ export default function RootLayout({
         className={`${baloo.variable} antialiased flex flex-col h-full items-center bg-gradient-to-r from-white to-yellow-100 font-baloo`}
       >
         {/* Only one navbar will show on a given viewport */}
-        <Navbar />
-        <MobileNavbar />
-        <main className="flex-grow py-10">{children}</main>
+        <div>
+        <div className="hidden sm:block">
+          <Navbar />
+        </div>
+        <div className="block sm:hidden">
+          <MobileNavbar />
+        </div>
+      </div>
+          <main className="flex-grow py-10">{children}</main>
         <Footer />
       </body>
     </html>

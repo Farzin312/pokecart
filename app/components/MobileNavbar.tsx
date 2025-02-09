@@ -97,6 +97,7 @@ function MobileNavbar() {
               alt="Close Menu"
               width={24}
               height={24}
+              unoptimized
             />
           ) : (
             <Image
@@ -104,6 +105,7 @@ function MobileNavbar() {
               alt="Open Menu"
               width={24}
               height={24}
+              unoptimized
             />
           )}
         </button>
@@ -133,6 +135,7 @@ function MobileNavbar() {
                   alt="Search"
                   width={25}
                   height={25}
+                  unoptimized
                 />
               </Button>
             </div>
