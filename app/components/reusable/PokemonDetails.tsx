@@ -12,27 +12,33 @@ interface PokemonDetailsProps {
 }
 
 function PokemonDetails({ selectedPokemon, similarPokemons }: PokemonDetailsProps) {
-  const [quantity, setQuantity] = useState(1); // Track quantity for cart
+  // State to track quantity and merchandise selection
+  const [quantity, setQuantity] = useState(1);
+  const [merchandise, setMerchandise] = useState('Plushies'); // Default selection
+  const [customMerchandise, setCustomMerchandise] = useState('');
 
-  function handleAmazonAffiliateLinkPlushies(pokemonName: string) {
+  // Build a generic Amazon affiliate link that uses the provided merchandise term.
+  function handleAmazonAffiliateLink(pokemonName: string, merchandise: string) {
     const baseUrl = process.env.NEXT_PUBLIC_AMAZON_BASE_URL;
     const category = process.env.NEXT_PUBLIC_AMAZON_CATEGORY;
     const affiliateTag = process.env.NEXT_PUBLIC_AMAZON_AFFILIATE_TAG;
     const linkCode = process.env.NEXT_PUBLIC_AMAZON_LINK_CODE;
     const language = process.env.NEXT_PUBLIC_AMAZON_LANGUAGE;
     const refTag = process.env.NEXT_PUBLIC_AMAZON_REF;
-  
-    const searchQuery = `${pokemonName}+plushies`;
-  
-    // Construct the Amazon affiliate link
+
+    // Build the search query using the Pokémon name and the merchandise type
+    const searchQuery = `${pokemonName} ${merchandise} pokemon`;
     const amazonUrl = `${baseUrl}?k=${encodeURIComponent(searchQuery)}&i=${category}&linkCode=${linkCode}&tag=${affiliateTag}&language=${language}&ref_=${refTag}`;
-  
     return amazonUrl;
   }
 
-
   if (!selectedPokemon)
     return <h1 className="text-center text-gray-500 text-lg">No Pokémon available.</h1>;
+
+  const searchMerchandise =
+    merchandise === 'Custom' && customMerchandise.trim() !== ''
+      ? customMerchandise
+      : merchandise;
 
   return (
     <div className="flex flex-col lg:flex-row items-center justify-center text-gray-900 p-8 gap-12 md:flex-row">
@@ -61,7 +67,7 @@ function PokemonDetails({ selectedPokemon, similarPokemons }: PokemonDetailsProp
 
         {/* Pokémon Type & Abilities */}
         <h3 className="flex flex-row justify-center flex-wrap mt-2 text-lg font-semibold text-yellow-600">
-           Type:{' '}
+          Type:{' '}
           <span className="flex flex-row flex-wrap capitalize ml-1 space-x-2">
             {selectedPokemon.types?.map((t, index) => (
               <span key={index} className="flex items-center space-x-1">
@@ -139,19 +145,54 @@ function PokemonDetails({ selectedPokemon, similarPokemons }: PokemonDetailsProp
           ${(selectedPokemon.base_experience ?? 50) * quantity}.00
         </p>
 
+        {/* Merchandise Selection */}
+        <div className="mt-4 w-full">
+          <label htmlFor="merchandise-select" className="block text-gray-700 font-semibold mb-2">
+            Select Merchandise:
+          </label>
+          <select
+            id="merchandise-select"
+            value={merchandise}
+            onChange={(e) => setMerchandise(e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none"
+          >
+            <option value="Plushies">Plushies</option>
+            <option value="Figurine">Figurine</option>
+            <option value="Fold Your Own">Fold Your Own</option>
+            <option value="Pokemon Card">Pokemon Card</option>
+            <option value="Squishmallows">Squishmallows</option>
+            <option value="Custom">Custom</option>
+          </select>
+          {merchandise === 'Custom' && (
+            <input
+              type="text"
+              placeholder="Enter custom merchandise"
+              value={customMerchandise}
+              onChange={(e) => setCustomMerchandise(e.target.value)}
+              className="mt-2 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none"
+            />
+          )}
+        </div>
+
         {/* Purchase Buttons */}
         <div className="mt-6 flex flex-col justify-center items-center space-y-3 w-full">
-          <Button variant='outline' 
-          className="w-6/12 bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-bold rounded-full transition-transform hover:scale-105 lg:w-full">
+          <Button
+            variant="outline"
+            className="w-6/12 bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-bold rounded-full transition-transform hover:scale-105 lg:w-full"
+          >
             Add to Cart 🛒
           </Button>
           <Button
-              variant="destructive"
-              className="w-6/12 font-bold rounded-full transition-transform hover:scale-105 lg:w-full"
+            variant="destructive"
+            className="w-6/12 font-bold rounded-full transition-transform hover:scale-105 lg:w-full"
+          >
+            <Link
+              href={handleAmazonAffiliateLink(selectedPokemon.name, searchMerchandise)}
+              target="_blank"
+              rel="noopener noreferrer"
             >
-          <Link href={handleAmazonAffiliateLinkPlushies(selectedPokemon.name)} target="_blank" rel="noopener noreferrer">       
               Buy Now 🔥
-          </Link>
+            </Link>
           </Button>
         </div>
 

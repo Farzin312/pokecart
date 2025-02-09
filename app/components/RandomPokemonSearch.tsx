@@ -66,7 +66,7 @@ export default function RandomPokemonSearch({ randomTypeData }: RandomPokemonSea
           className="bg-yellow-300 hover:bg-yellow-200 text-gray-900 font-bold rounded-md py-5 transition-transform transform hover:scale-105"
           onClick={handleSearchClick}
         >
-          Search Pokémon! 🔍
+          Discover More! 🔍
         </Button>
       </div>
     </div>
