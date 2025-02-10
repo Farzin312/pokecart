@@ -4,9 +4,9 @@ import Link from "next/link";
 function Hero() {
   return (
     <section className="w-full m-auto py-10">
-      <div className="relative flex flex-col sm:flex-row items-center justify-between max-w-6xl mx-auto mt-5 px-6">
+      <div className="relative flex flex-col lg:flex-row items-center justify-between max-w-6xl mx-auto mt-5 px-6">
        
-        <div className="flex-1 max-w-md sm:max-w-lg text-center sm:text-left sm:ml-12 sm:bg-gradient-to-bl sm:from-white sm:to-yellow-100  sm:bg-opacity-70 lg:rounded-3xl sm:p-6">
+        <div className="flex-1 max-w-md lg:max-w-lg text-center lg:text-left lg:ml-12 lg:bg-gradient-to-bl lg:from-white lg:to-yellow-100  lg:bg-opacity-70 lg:rounded-3xl lg:p-6">
           <h1 className="text-5xl font-extrabold text-gray-900 leading-tight drop-shadow-lg text-center lg:text-left">
             🎉 Welcome to <span className="text-yellow-500">PokéCart!</span>
           </h1>

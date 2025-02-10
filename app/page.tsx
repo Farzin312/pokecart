@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { PokemonCard, Spinner } from './components/reusable';
-import {RandomPokemonSearch, Hero } from './components';
+import {RandomPokemonSearch, Hero, MerchandiseShowcase } from './components';
 import PokemonWrapper from './wrappers/PokemonWrapper';
 import {fetchRandomPokemonSearchType, fetchPokemon } from './utils/pokemonFetcher';
 
@@ -46,6 +46,7 @@ export default async function page() {
       <Suspense fallback={<Spinner />}>
         <PokemonWrapper>
           <Hero />
+          <MerchandiseShowcase />
           <div
           id="explore-section"
           className="flex flex-col justify-center items-center space-y-2 py-8"
@@ -60,6 +61,7 @@ export default async function page() {
             <RandomPokemonSearch randomTypeData={randomTypeData} />
           </div>
         </div>
+        
         </PokemonWrapper>
       </Suspense>
     </div>

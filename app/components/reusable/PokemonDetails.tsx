@@ -158,7 +158,7 @@ function PokemonDetails({ selectedPokemon, similarPokemons }: PokemonDetailsProp
           >
             <option value="Plushies">Plushies</option>
             <option value="Figurine">Figurine</option>
-            <option value="Fold Your Own">Fold Your Own</option>
+            <option value="Nanoblock">Nanoblock</option>
             <option value="Pokemon Card">Pokemon Card</option>
             <option value="Squishmallows">Squishmallows</option>
             <option value="Custom">Custom</option>

@@ -53,7 +53,7 @@ const PokemonCard = memo(function PokemonCard() {
   return (
     <>
       {/* Desktop Layout – unchanged */}
-      <div className="hidden md:flex flex-col md:flex-row md:justify-center items-center gap-4 w-full">
+      <div className="hidden lg:flex flex-col md:flex-row md:justify-center items-center gap-4 w-full">
         {groups.map(({ type, pokemons }) => (
           <div
             key={type}
@@ -75,7 +75,7 @@ const PokemonCard = memo(function PokemonCard() {
       </div>
 
       {/* Mobile Layout – Animated Arrow Navigation */}
-      <div className="block md:hidden w-full">
+      <div className="block lg:hidden w-full">
         <div className="relative group">
           {/* Header: Shows active type and its icon */}
           <h2 className="w-full px-4 text-3xl font-bold text-gray-800 mb-4 flex justify-center items-center">
