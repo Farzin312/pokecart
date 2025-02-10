@@ -161,7 +161,6 @@ function Navbar() {
           </DropdownMenuContent>
         </DropdownMenu>
 
-        {/* Search input container (with ref) */}
         <div className="relative flex w-full" ref={searchContainerRef}>
           <div className="flex w-full border border-yellow-300 rounded-md">
             <SearchBar
@@ -182,8 +181,8 @@ function Navbar() {
               <Image
                 src="/search.png"
                 alt="Search"
-                width={35}
-                height={35}
+                width={45}
+                height={45}
                 unoptimized
               />
             </Button>
