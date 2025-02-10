@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -19,17 +19,22 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./reusable";
+import pokemonNames from "../data/pokemonNames.json";
 
 function MobileNavbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [searchValue, setSearchValue] = useState("");
+  const [searchActive, setSearchActive] = useState(false);
   const [selectedType, setSelectedType] = useState<string>("all");
   const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
-  const {show} = useScrollDirection();
+  const { show } = useScrollDirection();
 
-  // Update isMobile based on the current window width
+  // Ref to the search container for detecting outside clicks in mobile overlay
+  const searchContainerRef = useRef<HTMLDivElement>(null);
+
+  // Update isMobile based on current window width
   useEffect(() => {
     function handleResize() {
       setIsMobile(window.innerWidth < 650);
@@ -47,6 +52,20 @@ function MobileNavbar() {
     return () => unsubscribe();
   }, []);
 
+  // Close suggestions when clicking outside the search container
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        searchContainerRef.current &&
+        !searchContainerRef.current.contains(event.target as Node)
+      ) {
+        setSearchActive(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   const handleSearch = () => {
     const query = new URLSearchParams();
     if (searchValue.trim() !== "") {
@@ -58,9 +77,27 @@ function MobileNavbar() {
     if (query.toString()) {
       router.push(`/products?${query.toString()}`);
       setSearchValue("");
-      setMenuOpen(false); // close menu after search
+      setSearchActive(false);
+      setMenuOpen(false);
     }
   };
+
+  const handleSuggestionClick = (pokemonName: string) => {
+    router.push(`/products?pokemon=${pokemonName}`);
+    setSearchValue("");
+    setSearchActive(false);
+    setMenuOpen(false);
+  };
+
+  // Filter the imported pokemonNames for suggestions
+  const filteredSuggestions =
+    searchValue.trim().length > 0
+      ? (pokemonNames as string[])
+          .filter((name) =>
+            name.toLowerCase().startsWith(searchValue.toLowerCase())
+          )
+          .slice(0, 10)
+      : [];
 
   const handleLogout = async () => {
     try {
@@ -111,36 +148,54 @@ function MobileNavbar() {
         </button>
       </nav>
 
-      {/* Mobile Menu Overlay (now using a higher z-index so it isn’t greyed out) */}
+      {/* Mobile Menu Overlay */}
       {menuOpen && (
         <div className="bg-yellow-100 shadow-md rounded-b-md z-60">
           <div className="p-4 space-y-4">
-            {/* Search Input */}
-            <div className="flex border border-yellow-300 rounded-md">
-              <input
-                type="text"
-                placeholder="Search Pokémon 🤩"
-                value={searchValue}
-                onChange={(e) => setSearchValue(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-                className="w-full px-2 py-1 bg-yellow-100 rounded-l-md focus:outline-none"
-              />
-              <Button
-                variant="default"
-                className="px-3 py-1 bg-yellow-300 hover:bg-yellow-400 rounded-r-md focus:outline-none"
-                onClick={handleSearch}
-              >
-                <Image
-                  src="/search.png"
-                  alt="Search"
-                  width={25}
-                  height={25}
-                  unoptimized
+            {/* Search Input with Suggestions */}
+            <div className="relative" ref={searchContainerRef}>
+              <div className="flex border border-yellow-300 rounded-md">
+                <input
+                  type="text"
+                  placeholder="Search Pokémon 🤩"
+                  value={searchValue}
+                  onFocus={() => setSearchActive(true)}
+                  onChange={(e) => setSearchValue(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+                  className="w-full px-2 py-1 bg-yellow-100 rounded-l-md focus:outline-none"
                 />
-              </Button>
+                <Button
+                  variant="default"
+                  className="px-3 py-1 bg-yellow-300 hover:bg-yellow-400 rounded-r-md focus:outline-none"
+                  onClick={handleSearch}
+                >
+                  <Image
+                    src="/search.png"
+                    alt="Search"
+                    width={25}
+                    height={25}
+                    unoptimized
+                  />
+                </Button>
+              </div>
+
+              {/* Suggestions dropdown for mobile */}
+              {searchActive && filteredSuggestions.length > 0 && (
+                <ul className="absolute left-0 right-0 top-full bg-yellow-50 border border-yellow-300 rounded-md mt-1 max-h-60 overflow-y-auto z-50">
+                  {filteredSuggestions.map((name, index) => (
+                    <li
+                      key={index}
+                      onMouseDown={() => handleSuggestionClick(name)}
+                      className="cursor-pointer px-2 py-1 hover:bg-yellow-100"
+                    >
+                      {name.charAt(0).toUpperCase() + name.slice(1)}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
 
-            {/* Pokémon Type Filter using DropdownMenu (with icons) */}
+            {/* Pokémon Type Filter using DropdownMenu */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
@@ -189,7 +244,7 @@ function MobileNavbar() {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            {/* Navigation Links using the Button component */}
+            {/* Navigation Links */}
             <div className="flex flex-col space-y-2">
               <Link href="/cart">
                 <Button
@@ -197,7 +252,13 @@ function MobileNavbar() {
                   className="w-full text-left px-3 py-2 bg-yellow-300 hover:bg-yellow-400 rounded-md"
                   onClick={() => setMenuOpen(false)}
                 >
-                  <Image src="/wishlist.png" alt="Wishlist" width={25} height={25} unoptimized />
+                  <Image
+                    src="/wishlist.png"
+                    alt="Wishlist"
+                    width={25}
+                    height={25}
+                    unoptimized
+                  />
                 </Button>
               </Link>
               {user ? (
@@ -212,7 +273,7 @@ function MobileNavbar() {
                 <Link href="/auth/login">
                   <Button
                     variant="default"
-                    className="w-full text-left px-3 py-2 rounded-md"
+                    className="w-full font-bold text-left px-3 py-2 rounded-md"
                     onClick={() => setMenuOpen(false)}
                   >
                     Login

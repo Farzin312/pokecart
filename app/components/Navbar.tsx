@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -20,6 +20,7 @@ import {
   DropdownMenuTrigger,
 } from "./reusable";
 import useScrollDirection from "../hooks/useScrollDirection";
+import pokemonNames from "../data/pokemonNames.json";
 
 function Navbar() {
   const [searchActive, setSearchActive] = useState(false);
@@ -29,6 +30,9 @@ function Navbar() {
   const router = useRouter();
   const [isMobile, setIsMobile] = useState(false);
   const { show } = useScrollDirection();
+
+  // Ref to the search container for detecting outside clicks
+  const searchContainerRef = useRef<HTMLDivElement>(null);
 
   // Hide the desktop navbar on mobile devices
   useEffect(() => {
@@ -47,8 +51,37 @@ function Navbar() {
     return () => unsubscribe();
   }, []);
 
+  // Close search suggestions when clicking outside the search container
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        searchContainerRef.current &&
+        !searchContainerRef.current.contains(event.target as Node)
+      ) {
+        setSearchActive(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   const handleFocus = () => setSearchActive(true);
-  const handleBlur = () => setSearchActive(false);
+
+  const handleSuggestionClick = (pokemonName: string) => {
+    router.push(`/products?pokemon=${pokemonName}`);
+    setSearchValue("");
+    setSearchActive(false);
+  };
+
+  // Filter the imported pokemonNames for suggestions
+  const filteredSuggestions =
+    searchValue.trim().length > 0
+      ? (pokemonNames as string[])
+          .filter((name) =>
+            name.toLowerCase().startsWith(searchValue.toLowerCase())
+          )
+          .slice(0, 10)
+      : [];
 
   const handleSearch = () => {
     const query = new URLSearchParams();
@@ -61,6 +94,7 @@ function Navbar() {
     if (query.toString()) {
       router.push(`/products?${query.toString()}`);
       setSearchValue("");
+      setSearchActive(false);
     }
   };
 
@@ -106,7 +140,7 @@ function Navbar() {
             <DropdownMenuCheckboxItem
               checked={selectedType === "all"}
               onCheckedChange={() => setSelectedType("all")}
-              className="flex flex-row pl-6 "
+              className="flex flex-row pl-6"
             >
               <div className="icon mr-2">
                 <Image src="/icons/all.svg" alt="All" width={40} height={40} />
@@ -127,27 +161,48 @@ function Navbar() {
           </DropdownMenuContent>
         </DropdownMenu>
 
-        <div className="flex w-full border border-yellow-300 rounded-md">
-          {/* Search Bar */}
-          <SearchBar
-            type="text"
-            placeholder="Search Pokémon 🤩"
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-            className="w-full rounded-md px-2 py-1 bg-yellow-100 hover:border-yellow-400"
-          />
+        {/* Search input container (with ref) */}
+        <div className="relative flex w-full" ref={searchContainerRef}>
+          <div className="flex w-full border border-yellow-300 rounded-md">
+            <SearchBar
+              type="text"
+              placeholder="Search Pokémon 🤩"
+              onFocus={handleFocus}
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+              className="w-full rounded-md px-2 py-1 bg-yellow-100 hover:border-yellow-400"
+            />
 
-          {/* Search Button */}
-          <Button
-            className="text-2xl px-3 py-1 hover:bg-transparent hover:border hover:border-yellow-400"
-            variant="ghost"
-            onClick={handleSearch}
-          >
-            <Image src="/search.png" alt="Search" width={35} height={35} unoptimized />
-          </Button>
+            <Button
+              className="text-2xl px-3 py-1 hover:bg-transparent hover:border hover:border-yellow-400"
+              variant="ghost"
+              onClick={handleSearch}
+            >
+              <Image
+                src="/search.png"
+                alt="Search"
+                width={35}
+                height={35}
+                unoptimized
+              />
+            </Button>
+          </div>
+
+          {/* Suggestions dropdown */}
+          {searchActive && filteredSuggestions.length > 0 && (
+            <ul className="absolute left-0 right-0 top-full bg-yellow-50 border border-yellow-300 rounded-md mt-1 max-h-60 overflow-y-auto z-50">
+              {filteredSuggestions.map((name, index) => (
+                <li
+                  key={index}
+                  onMouseDown={() => handleSuggestionClick(name)}
+                  className="cursor-pointer px-2 py-1 hover:bg-yellow-100"
+                >
+                  {name.charAt(0).toUpperCase() + name.slice(1)}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
 
@@ -155,20 +210,26 @@ function Navbar() {
         <li>
           <Link href="/wishlist">
             <Button className="text-2xl" variant="link">
-              <Image src="/wishlist.png" alt="Wishlist" width={30} height={30} unoptimized/>
+              <Image
+                src="/wishlist.png"
+                alt="Wishlist"
+                width={30}
+                height={30}
+                unoptimized
+              />
             </Button>
           </Link>
         </li>
         {user ? (
           <li>
-            <Button variant="destructive" onClick={handleLogout}>
+            <Button variant="destructive" className='fon-bold' onClick={handleLogout}>
               Logout
             </Button>
           </li>
         ) : (
           <li>
             <Link href="/auth/login">
-              <Button variant="default">Login</Button>
+              <Button className="font-bold" variant="default">Login</Button>
             </Link>
           </li>
         )}

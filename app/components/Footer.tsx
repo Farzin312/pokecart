@@ -43,7 +43,7 @@ export default function Footer() {
             <h3 className="text-2xl font-bold text-gray-800">Contact</h3>
             <div className="mt-2 space-y-3">
               {/* Email */}
-                <div className="flex items-center justify-center space-x-2">
+                <div className="flex items-start justify-start space-x-2">
                 {/* Gmail Icon */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -56,7 +56,7 @@ export default function Footer() {
                 <span className="text-gray-700">farzinshifat@gmail.com</span>
               </div>
               {/* LinkedIn */}
-              <div className="flex items-center justify-center space-x-2">
+              <div className="flex items-start justify-start space-x-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-6 w-6 text-blue-600"
@@ -68,7 +68,7 @@ export default function Footer() {
                 <span className="text-gray-700">Farzin Shifat</span>
               </div>
               {/* GitHub */}
-              <div className="flex items-center justify-center space-x-2">
+              <div className="flex items-start justify-start space-x-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-6 w-6 text-gray-800"

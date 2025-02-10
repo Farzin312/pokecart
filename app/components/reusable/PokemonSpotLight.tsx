@@ -40,7 +40,7 @@ function PokemonSpotLight() {
             {/* Pokémon Info */}
             <div className="flex flex-col items-center justify-center text-gray-800 p-4">
                 <h2 className="text-4xl font-extrabold capitalize drop-shadow-md text-gray-900">{randPokemon?.name}</h2>
-                <p className="mt-2 text-lg italic text-gray-700">
+                <p className="mt-2 text-lg text-center m-4 italic text-gray-700">
                     {randPokemon?.name} is known for its <span className="font-semibold">{randPokemon?.abilities?.[0]?.ability?.name || "mystical powers"}!</span>
                 </p>
                 <h3 className="text-sm mt-1 flex flex-row items-center gap-2">
