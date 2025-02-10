@@ -73,7 +73,6 @@ function Navbar() {
     }
   };
 
-  // Return nothing if on a mobile viewport (so the MobileNavbar takes over)
   if (isMobile) return null;
 
   return (
@@ -86,9 +85,7 @@ function Navbar() {
         <Logo />
       </Link>
 
-      {/* Styled Search Container */}
       <div className="flex min-w-12 items-center px-2 lg:w-6/12 space-x-1">
-        {/* Dropdown Type Filter */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
@@ -156,9 +153,9 @@ function Navbar() {
 
       <ul className="flex space-x-4">
         <li>
-          <Link href="/cart">
+          <Link href="/wishlist">
             <Button className="text-2xl" variant="link">
-              🛒
+              <Image src="/wishlist.png" alt="Wishlist" width={30} height={30} />
             </Button>
           </Link>
         </li>
