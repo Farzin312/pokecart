@@ -197,7 +197,7 @@ function MobileNavbar() {
                   className="w-full text-left px-3 py-2 bg-yellow-300 hover:bg-yellow-400 rounded-md"
                   onClick={() => setMenuOpen(false)}
                 >
-                  <Image src="/wishlist.png" alt="Wishlist" width={25} height={25} />
+                  <Image src="/wishlist.png" alt="Wishlist" width={25} height={25} unoptimized />
                 </Button>
               </Link>
               {user ? (

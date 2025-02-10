@@ -37,7 +37,7 @@ export default function RootLayout({
           <MobileNavbar />
         </div>
       </div>
-          <main className="flex-grow py-10 w-full">{children}</main>
+          <main className="flex-grow py-10 w-full">{children}</main>       
         <Footer />
       </body>
     </html>

@@ -155,7 +155,7 @@ function Navbar() {
         <li>
           <Link href="/wishlist">
             <Button className="text-2xl" variant="link">
-              <Image src="/wishlist.png" alt="Wishlist" width={30} height={30} />
+              <Image src="/wishlist.png" alt="Wishlist" width={30} height={30} unoptimized/>
             </Button>
           </Link>
         </li>
