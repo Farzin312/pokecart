@@ -15,19 +15,6 @@ interface RandomPokemonSearchProps {
 }
 
 export default function RandomPokemonSearch({ randomTypeData }: RandomPokemonSearchProps) {
-  const handleSearchClick = () => {
-    // Scroll to top
-    window.scrollTo({ top: 0, behavior: "smooth" });
-
-    // Focus on search bar after scrolling finishes
-    setTimeout(() => {
-      const searchBar = document.querySelector("input[type='text']") as HTMLInputElement;
-      if (searchBar) {
-        searchBar.focus();
-      }
-    }, 500);
-  };
-
   return (
     <div className="space-y-10">
       <h2 className="text-3xl md:text-3xl font-bold capitalize m-3 text-center flex flex-row items-center justify-center">Featured Types</h2>
@@ -58,17 +45,6 @@ export default function RandomPokemonSearch({ randomTypeData }: RandomPokemonSea
           </li>
         ))}
       </ul>
-
-      {/* Open Search Bar Button */}
-      <div className="flex justify-center">
-        <Button
-          variant="default"
-          className="bg-yellow-300 hover:bg-yellow-200 text-gray-900 font-bold rounded-md py-5 transition-transform transform hover:scale-105"
-          onClick={handleSearchClick}
-        >
-          Discover More! 🔍
-        </Button>
-      </div>
     </div>
   );
 }
