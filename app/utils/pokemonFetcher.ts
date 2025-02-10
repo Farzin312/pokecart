@@ -256,7 +256,7 @@ export async function fetchPokemonBySearch(
       const filtered = data.results.filter((pokemon: { name: string; url: string }) =>
         pokemon.name.toLowerCase().startsWith(normalizedQuery)
       );
-      const limited = filtered.slice(0, 20);
+      const limited = filtered.slice(0);
       const pokemonDetails = await Promise.all(
         limited.map(async (pokemon: { name: string; url: string }) => {
           try {

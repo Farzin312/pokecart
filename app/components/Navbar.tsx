@@ -143,7 +143,7 @@ function Navbar() {
               className="flex flex-row pl-6"
             >
               <div className="icon mr-2">
-                <Image src="/icons/all.svg" alt="All" width={40} height={40} />
+                <Image src="/icons/all.svg" alt="All" width={40} height={40} unoptimized />
               </div>
               All
             </DropdownMenuCheckboxItem>
