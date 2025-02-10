@@ -17,7 +17,10 @@ interface RandomPokemonSearchProps {
 export default function RandomPokemonSearch({ randomTypeData }: RandomPokemonSearchProps) {
   return (
     <div className="space-y-10">
-      <h2 className="text-3xl md:text-3xl font-bold capitalize m-3 text-center flex flex-row items-center justify-center">Featured Types</h2>
+      <h2 className="text-3xl md:text-3xl font-bold capitalize m-3 text-center flex flex-row items-center justify-center">
+        ⚡ Featured 
+        <span className="text-yellow-500 ml-2"> Types</span> 🔥
+      </h2>
       <ul className="flex flex-row justify-center gap-4 lg:gap-6">
         {randomTypeData.map(({ type, randomPokemon }) => (
           <li
