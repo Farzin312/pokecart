@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <div className="flex flex-col flex-grow h-full items-center justify-center p-4">
+    <div className="flex flex-col flex-grow h-full min-h-screen items-center justify-center p-4">
       {/* Pokémon Image */}
       <img
         src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png"

@@ -210,6 +210,13 @@ export async function fetchPokemonBySearch(
   try {
     if (typeFilter) {
       const typeResponse = await fetch(`https://pokeapi.co/api/v2/type/${typeFilter}`);
+      
+      // Check if the response is OK before parsing
+      if (!typeResponse.ok) {
+        console.error(`Error fetching type ${typeFilter}: ${typeResponse.status} ${typeResponse.statusText}`);
+        return []; // or throw an error if you prefer
+      }
+      
       const typeData = await typeResponse.json();
 
       const availablePokemon: { name: string; url: string }[] = typeData.pokemon.map(
@@ -230,7 +237,9 @@ export async function fetchPokemonBySearch(
         limited.map(async (pokemon) => {
           try {
             const detailsResponse = await fetch(pokemon.url);
-            if (!detailsResponse.ok) throw new Error(`Failed to fetch ${pokemon.name}`);
+            if (!detailsResponse.ok) {
+              throw new Error(`Failed to fetch ${pokemon.name}`);
+            }
             const detailsData = await detailsResponse.json();
             return {
               id: detailsData.id,
@@ -261,7 +270,9 @@ export async function fetchPokemonBySearch(
         limited.map(async (pokemon: { name: string; url: string }) => {
           try {
             const detailsResponse = await fetch(pokemon.url);
-            if (!detailsResponse.ok) throw new Error(`Failed to fetch ${pokemon.name}`);
+            if (!detailsResponse.ok) {
+              throw new Error(`Failed to fetch ${pokemon.name}`);
+            }
             const detailsData = await detailsResponse.json();
             return {
               id: detailsData.id,

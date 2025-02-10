@@ -16,7 +16,7 @@ async function Page({ params }: PageProps) {
   if (!pokemon) return <p>Pokémon not found</p>;
 
   return (
-    <div className="flex h-full justify-center items-center">
+    <div className="flex h-full min-h-screen justify-center items-center">
       <Suspense fallback={<Spinner />}>
         <PokemonWrapper>
           <PokemonDetails selectedPokemon={pokemon} similarPokemons={reccomendedPokemons} />

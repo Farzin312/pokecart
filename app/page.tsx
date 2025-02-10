@@ -42,7 +42,7 @@ export default async function page() {
   const randomTypeData = (await getRandomTypeAndPokemon()).filter((data) => data !== null);
 
   return (
-    <div className="h-full flex flex-col items-center justify-center space-y-4">
+    <div className="h-full min-h-screen flex flex-col items-center justify-center space-y-4">
       <Suspense fallback={<Spinner />}>
         <PokemonWrapper>
           <Hero />

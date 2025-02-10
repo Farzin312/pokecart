@@ -14,7 +14,7 @@ export default async function Page({ searchParams }: PageProps) {
   const typeFilter = resolvedSearchParams.type ?? "";
 
   return (
-    <div className="flex h-full items-center justify-center p-4">
+    <div className="flex h-full min-h-screen items-center justify-center p-4">
       <Suspense fallback={<Spinner />}>
         <PokemonWrapper searchQuery={searchQuery} typeFilter={typeFilter}>
           <SearchedPokemon searchQuery={searchQuery} />
