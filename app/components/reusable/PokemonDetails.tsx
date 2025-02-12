@@ -7,6 +7,8 @@ import Pokemon from "@/app/type/Pokemon";
 import { Button } from "./Button";
 import Modal from "./Modal";
 import { PokemonTypeImage } from "./PokemonTypeImage";
+// Import the helper to create a Supabase client on the client side
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 interface PokemonDetailsProps {
   selectedPokemon: Pokemon | null;
@@ -22,6 +24,7 @@ function PokemonDetails({ selectedPokemon, similarPokemons }: PokemonDetailsProp
   useEffect(() => {
     if (!selectedPokemon) return;
 
+    // This part remains unchanged because you still update "recently viewed"
     const token = document.cookie
       .split("; ")
       .find((row) => row.startsWith("token="))
@@ -78,57 +81,74 @@ function PokemonDetails({ selectedPokemon, similarPokemons }: PokemonDetailsProp
 
   async function handleAddToWishlist() {
     if (!selectedPokemon) return;
-
+  
+    // Compute the merchandise to use
     const searchMerchandise =
       merchandise === "Custom" && customMerchandise.trim() !== ""
         ? customMerchandise
         : merchandise;
-
+  
+    // Get the Firebase token from cookies (you already do this)
     const token = document.cookie
       .split("; ")
       .find((row) => row.startsWith("token="))
       ?.split("=")[1];
-
+  
     if (!token) {
       setModalMessage("Please log in to add to wishlist.");
       return;
     }
-
-    try {
-      // 🔥 Fetch user ID from Firebase token
-      const res = await fetch("/api/getUserId", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token }),
-      });
-
-      const { userId } = await res.json();
-      if (!res.ok || !userId) throw new Error("Failed to get user ID");
-
-      // 🔥 Add to wishlist using valid UUID
-      const addRes = await fetch("/api/wishlist", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          userId,
-          merchandiseType: searchMerchandise,
-          pokemon: selectedPokemon,
-        }),
-      });
-
-      const result = await addRes.json();
-      if (!addRes.ok) {
-        throw new Error(result.error || "Failed to add to wishlist");
-      }
-
-      setModalMessage("Added to wishlist!");
-    } catch (error) {
-      console.error("❌ Error adding to wishlist:", error);
-      setModalMessage(
-        error instanceof Error ? error.message : "An unknown error occurred"
-      );
+  
+    // Use your existing API to get the Firebase userId
+    const res = await fetch("/api/getUserId", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token }),
+    });
+    const { userId } = await res.json();
+    if (!res.ok || !userId) {
+      setModalMessage("Failed to get user ID. Please log in again.");
+      return;
     }
-  }
+  
+    // Initialize the Supabase client (without checking supabase.auth.getSession)
+    const supabase = createClientComponentClient();
+  
+    // Check how many wishlist items exist for this user
+    const { count, error: countError } = await supabase
+      .from("wishlist")
+      .select("id", { count: "exact", head: true })
+      .eq("user_id", userId);
+  
+    if (countError) {
+      console.error("Error checking wishlist count:", countError);
+      setModalMessage("Error checking wishlist. Please try again.");
+      return;
+    }
+  
+    if (count !== undefined && count !== null && count >= 10) {
+      setModalMessage("Maximum Pokemon saved, please delete before adding another one.");
+      return;
+    }
+  
+    // Insert the new wishlist item into Supabase
+    const { error: insertError } = await supabase
+      .from("wishlist")
+      .insert([
+        {
+          user_id: userId,
+          merchandise_type: searchMerchandise,
+          pokemon: selectedPokemon, // Make sure your column supports JSON if needed
+        },
+      ]);
+  
+    if (insertError) {
+      console.error("Error adding to wishlist:", insertError);
+      setModalMessage(insertError.message);
+    } else {
+      setModalMessage("Added to wishlist!");
+    }
+  }  
 
   if (!selectedPokemon)
     return (
@@ -137,8 +157,8 @@ function PokemonDetails({ selectedPokemon, similarPokemons }: PokemonDetailsProp
       </h1>
     );
 
-  // Use the computed merchandise value
-  const searchMerchandise =
+  // Compute the merchandise value to pass to the Amazon link
+  const computedMerchandise =
     merchandise === "Custom" && customMerchandise.trim() !== ""
       ? customMerchandise
       : merchandise;
@@ -283,7 +303,7 @@ function PokemonDetails({ selectedPokemon, similarPokemons }: PokemonDetailsProp
               className="w-6/12 font-bold rounded-full transition-transform hover:scale-105 lg:w-full"
             >
               <Link
-                href={handleAmazonAffiliateLink(selectedPokemon.name, searchMerchandise)}
+                href={handleAmazonAffiliateLink(selectedPokemon.name, computedMerchandise)}
                 target="_blank"
                 rel="noopener noreferrer"
               >
