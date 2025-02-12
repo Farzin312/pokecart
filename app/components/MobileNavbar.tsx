@@ -246,7 +246,7 @@ function MobileNavbar() {
 
             {/* Navigation Links */}
             <div className="flex flex-col space-y-2">
-              <Link href="/cart">
+              <Link href="/wishlist">
                 <Button
                   variant="default"
                   className="w-full text-left px-3 py-2 bg-yellow-300 hover:bg-yellow-400 rounded-md"

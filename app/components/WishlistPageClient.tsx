@@ -113,7 +113,6 @@ export default function WishlistPageClient({ data, userId }: WishlistPageClientP
           const { error } = await res.json();
           throw new Error(error);
         }
-        // Remove from local state in both images & names
         setViewedImages((prev) => prev.filter((img) => img.id?.toString() !== pokemonId));
         setViewedNames((prev) => prev.filter((nm) => nm.id?.toString() !== pokemonId));
       } catch {
@@ -358,6 +357,7 @@ export default function WishlistPageClient({ data, userId }: WishlistPageClientP
                         width={80}
                         height={80}
                         className="w-20 h-20 rounded-full mb-2"
+                        unoptimized
                       />
                       <h3 className="text-xl sm:text-2xl font-extrabold text-yellow-600 capitalize">
                         {item.pokemon.name}
