@@ -24,7 +24,7 @@ export default function ProtectedRoute({ children }: { children: React.ReactNode
     return () => unsubscribe();
   }, [router]);
 
-  if (loading) return <div className="text-center">
+  if (loading) return <div className="h-full min-h-screen flex justify-center items-center">
     <Spinner />
     </div>;
 

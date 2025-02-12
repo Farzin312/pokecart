@@ -10,6 +10,7 @@ import OrderDetails from './OrderDetails';
 import Pagination from './Pagination';
 import SearchBar from './SearchBar';
 import SearchOrders from './SearchOrders';
+import ConfirmationModal from './ConfirmationModal';
 import {  DropdownMenu,
     DropdownMenuTrigger,
     DropdownMenuContent,
@@ -31,4 +32,4 @@ import {  DropdownMenu,
 export { Modal, Button, buttonVariants, Spinner, PokemonCard, PokemonDetails, BackButton, OrderDetails, Pagination, SearchBar, SearchOrders, PokemonType
     , PokemonSpotLight, DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuCheckboxItem, DropdownMenuRadioItem,
      DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuGroup, DropdownMenuPortal, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuRadioGroup,
-    PokemonTypeImage, POKEMON_TYPES };
+    PokemonTypeImage, POKEMON_TYPES, ConfirmationModal };

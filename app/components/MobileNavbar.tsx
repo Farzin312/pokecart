@@ -102,7 +102,7 @@ function MobileNavbar() {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      router.push("/login");
+      router.push("/auth/login");
       setMenuOpen(false);
     } catch (error) {
       console.error("Logout failed:", error);
@@ -263,8 +263,8 @@ function MobileNavbar() {
               </Link>
               {user ? (
                 <Button
-                  variant="destructive"
-                  className="w-full text-left px-3 py-2 rounded-md"
+                  variant="default"
+                  className="w-full font-bold text-left px-3 py-2 rounded-md"
                   onClick={handleLogout}
                 >
                   Logout

@@ -101,7 +101,7 @@ function Navbar() {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      router.push("/login");
+      router.push("/auth/login");
     } catch (error) {
       console.error("Logout failed:", error);
     }
@@ -221,7 +221,7 @@ function Navbar() {
         </li>
         {user ? (
           <li>
-            <Button variant="destructive" className='fon-bold' onClick={handleLogout}>
+            <Button variant="default" className='font-bold' onClick={handleLogout}>
               Logout
             </Button>
           </li>
